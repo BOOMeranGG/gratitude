@@ -1,4 +1,4 @@
-package com.orange_infinity.gratitude.view
+package com.orange_infinity.gratitude.view.activity
 
 import android.os.Bundle
 import android.view.WindowManager

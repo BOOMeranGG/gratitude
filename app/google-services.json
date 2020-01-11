@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "282301380745",
+    "firebase_url": "https://gratitude-ac586.firebaseio.com",
+    "project_id": "gratitude-ac586",
+    "storage_bucket": "gratitude-ac586.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282301380745:android:0f4854bdebe91e4289ae58",
+        "android_client_info": {
+          "package_name": "com.orange_infinity.gratitude"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282301380745-ae5oq1k62avk26vpfr0mu9p1ke0mi468.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orange_infinity.gratitude",
+            "certificate_hash": "b363b5a1293d5557f13c28ee07df621fddcebe81"
+          }
+        },
+        {
+          "client_id": "282301380745-tptpd06ht512gsqq243375l8hr29mfpl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJjPVVKZ1fgf9i9jn0ov3qp2WJ7oDDzIw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282301380745-tptpd06ht512gsqq243375l8hr29mfpl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
