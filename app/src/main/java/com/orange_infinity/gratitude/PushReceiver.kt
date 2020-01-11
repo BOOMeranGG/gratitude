@@ -11,7 +11,6 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.orange_infinity.gratitude.view.activity.MainActivity
 
-
 private const val NOTIFY_ID = 101
 private const val CHANNEL_ID = "Push channel"
 
@@ -20,6 +19,8 @@ class PushReceiver : FirebaseMessagingService() {
     override fun onMessageReceived(message: RemoteMessage) {
         super.onMessageReceived(message)
         Log.i(TAG, "Start to getting message")
+        // Message data may be need for receiving while app is not focused or doesn't running
+        // message.data ??
 
         if (message.notification != null) {
             Log.i(
