@@ -13,4 +13,7 @@ interface RecordDao {
 
     @Query("SELECT * FROM Record ORDER BY id DESC")
     fun findAll(): List<Record>
+
+    @Query("SELECT COUNT(*) FROM Record")
+    fun getCountOfRecords(): Int
 }

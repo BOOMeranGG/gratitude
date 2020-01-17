@@ -1,4 +1,4 @@
-package com.orange_infinity.gratitude.model
+package com.orange_infinity.gratitude.model.preferences
 
 import android.content.Context
 import android.util.Log
