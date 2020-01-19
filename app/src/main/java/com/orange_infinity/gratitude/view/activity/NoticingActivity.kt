@@ -21,7 +21,7 @@ class NoticingActivity : BaseActivity() {
         var fragment = fm.findFragmentById(R.id.layoutNoticingContainer)
 
         if (fragment == null) {
-            fragment = LevelNoticingFragment.newInstance()
+            fragment = LevelNoticingFragment.newInstance(this)
             fm.beginTransaction()
                 .add(R.id.layoutNoticingContainer, fragment)
                 .commit()

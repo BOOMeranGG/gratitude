@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorTransparentLightGray"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/colorBlack"
+            android:textSize="15sp"
+            android:text="Did anything good happened to you today?"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/colorLightBlack">
+        </View>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center"
+            android:textColor="@color/colorLightBlack"
+            android:textSize="12sp"
+            android:text="Met a friend for a lunch? Had a moment of calm?\n Nothing is too big or too small!"/>
+
+
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:background="@color/colorTransparentLightGray"
+        android:layout_marginTop="12dp"
+        android:layout_height="match_parent">
+
+
+        <EditText
+            android:id="@+id/editRecord"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:gravity="top"
+            android:hint="Type here..."
+            android:textSize="12sp"
+            android:textColor="@color/colorBlueText"
+            android:inputType="textMultiLine"/>
+
+        <ImageView
+            android:id="@+id/imgMicrophone"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:layout_constraintTop_toTopOf="@id/imgPaint"
+            app:layout_constraintEnd_toStartOf="@id/imgPaint"
+            android:src="@drawable/microphone_swamp"/>
+
+        <ImageView
+            android:id="@+id/imgPaint"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginBottom="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/paint_red"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>
