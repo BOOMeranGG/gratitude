@@ -51,23 +51,6 @@ class JournalActivity : BaseActivity() {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private fun saveNoticing() {
-        object : AsyncTask<Unit, Unit, Unit>() {
-
-            override fun doInBackground(vararg params: Unit) {
-//                val record = Record()
-//                val formatForDateNow = SimpleDateFormat("MM/dd/yyyy", Locale.US)
-//                val currentDate = formatForDateNow.format(Date())
-//                record.date = currentDate
-//                record.description = "testDescription created on: $currentDate"
-//
-//                AppDatabase.getInstance(applicationContext).getRecordDao().insert(record)
-            }
-
-        }.execute()
-    }
-
-    @SuppressLint("StaticFieldLeak")
     private fun getAllNoticing() {
         object : AsyncTask<Unit, Unit, List<Record>>() {
 

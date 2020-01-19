@@ -35,7 +35,7 @@ class LevelNoticingFragment : Fragment() {
         var fragment = fm.findFragmentById(R.id.fillRecordContainerTop)
 
         if (fragment == null) {
-            fragment = FillRecordFragment.newInstance()
+            fragment = FillRecordFragment.newInstance(fragmentActivity)
             fm.beginTransaction()
                 .add(R.id.fillRecordContainerTop, fragment)
                 .commit()
@@ -47,7 +47,7 @@ class LevelNoticingFragment : Fragment() {
         var fragment = fm.findFragmentById(R.id.fillRecordContainerBottom)
 
         if (fragment == null) {
-            fragment = FillRecordFragment.newInstance()
+            fragment = FillRecordFragment.newInstance(fragmentActivity)
             fm.beginTransaction()
                 .add(R.id.fillRecordContainerBottom, fragment)
                 .commit()

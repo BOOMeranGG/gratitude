@@ -11,7 +11,7 @@ interface RecordDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(cashCheque: Record)
 
-    @Query("SELECT * FROM Record ORDER BY id ASC")
+    @Query("SELECT * FROM Record ORDER BY id DESC")
     fun findAll(): List<Record>
 
     @Query("SELECT COUNT(*) FROM Record")
