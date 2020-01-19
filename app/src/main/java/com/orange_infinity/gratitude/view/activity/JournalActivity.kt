@@ -92,14 +92,22 @@ class JournalActivity : BaseActivity() {
     private inner class RecordHolder(val recordView: View) :
         RecyclerView.ViewHolder(recordView), View.OnClickListener {
 
-        fun bindRecord(record: Record) {
+        fun bindRecord(record: Record, position: Int, countOfRecords: Int) {
             recordView.tvDate.text = record.date
             recordView.tvDescription.text = record.description
+
+            if (position == 0) {
+                recordView.layoutTitle.visibility = View.VISIBLE
+            }
+            if (position == countOfRecords - 1) {
+                recordView.line1.visibility = View.GONE
+                recordView.line2.visibility = View.GONE
+            }
 
             recordView.listRecordLayout.setOnClickListener(this)
         }
 
-        override fun onClick(v: View?) {
+        override fun onClick(v: View) {
         }
     }
 
@@ -114,7 +122,7 @@ class JournalActivity : BaseActivity() {
 
         override fun onBindViewHolder(recordHolder: RecordHolder, position: Int) {
             val record = records[position]
-            recordHolder.bindRecord(record)
+            recordHolder.bindRecord(record, position, records.size)
         }
 
         override fun getItemCount(): Int = records.size

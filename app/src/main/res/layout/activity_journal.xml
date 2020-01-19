@@ -14,31 +14,11 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/colorTransparentLightGray">
 
 
     </androidx.recyclerview.widget.RecyclerView>
 
-    <!--<TextView-->
-    <!--android:id="@+id/tvNoticing"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--app:layout_constraintTop_toTopOf="parent"-->
-    <!--app:layout_constraintStart_toStartOf="parent"-->
-    <!--android:layout_margin="8dp"-->
-    <!--android:textColor="@color/colorBlack"-->
-    <!--android:textSize="18sp"-->
-    <!--android:text="Noticing will be here"/>-->
-
-    <!--<Button-->
-    <!--android:id="@+id/btnCreateNoticing"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--app:layout_constraintStart_toStartOf="parent"-->
-    <!--app:layout_constraintEnd_toEndOf="parent"-->
-    <!--app:layout_constraintTop_toTopOf="parent"-->
-    <!--app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--android:textSize="16sp"-->
-    <!--android:text="Create Noticing"/>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
