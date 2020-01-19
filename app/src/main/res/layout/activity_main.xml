@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="20">
+        android:layout_weight="15">
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -21,10 +21,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40"
+        android:layout_weight="45"
         android:orientation="vertical">
 
-        <Button
+        <TextView
             android:id="@+id/btnNoticing"
             style="@style/MenuButton"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +34,7 @@
             android:layout_gravity="center"
             android:text="Noticing"/>
 
-        <Button
+        <TextView
             android:id="@+id/btnReflecting"
             style="@style/MenuButton"
             app:layout_constraintStart_toStartOf="parent"
@@ -44,7 +44,7 @@
             android:enabled="false"
             android:text="Reflecting &amp; Appreciating"/>
 
-        <Button
+        <TextView
             android:id="@+id/btnPractice"
             style="@style/MenuButton"
             app:layout_constraintStart_toStartOf="parent"
@@ -54,7 +54,7 @@
             android:enabled="false"
             android:text="Practicing Gratitude"/>
 
-        <Button
+        <TextView
             android:id="@+id/btnJournal"
             style="@style/MenuButton"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,7 +69,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="40">
+        android:layout_weight="40"
+        android:layout_marginTop="16dp">
 
         <ImageView
             android:id="@+id/imgShare"
@@ -78,7 +79,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="16dp"
+            android:layout_gravity="center"
             android:src="@drawable/share_logo"/>
 
 
