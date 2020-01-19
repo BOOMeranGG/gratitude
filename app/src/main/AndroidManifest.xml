@@ -11,6 +11,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".view.activity.ShareActivity">
+        </activity>
+        <activity android:name=".view.activity.CitationActivity">
+        </activity>
         <activity android:name=".view.activity.NoticingActivity">
         </activity>
         <activity android:name=".view.activity.JournalActivity">

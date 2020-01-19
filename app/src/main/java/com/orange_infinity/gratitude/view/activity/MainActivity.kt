@@ -28,6 +28,11 @@ class MainActivity : BaseActivity() {
             val intent = Intent(this, JournalActivity::class.java)
             startActivity(intent)
         }
+
+        imgShare.setOnClickListener {
+            val intent = Intent(this, ShareActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
