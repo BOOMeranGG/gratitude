@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.preferences.EntryDateRegister
+import com.orange_infinity.gratitude.model.preferences.LevelPreferences
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity() {
@@ -19,6 +20,8 @@ class MainActivity : BaseActivity() {
         val lastDate = EntryDateRegister.getLastEntryDate(this)
         Toast.makeText(this, "Last entry date: $lastDate", Toast.LENGTH_LONG).show()
         EntryDateRegister.saveEntryDate(this)
+
+        //checkLevel()
 
         btnNoticing.setOnClickListener {
             goToNoticing()
@@ -32,6 +35,23 @@ class MainActivity : BaseActivity() {
         imgShare.setOnClickListener {
             val intent = Intent(this, ShareActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        checkLevel()
+    }
+
+    private fun checkLevel() {
+        val level = LevelPreferences.getLevel(this)
+        if (level == null || level == 0) {
+            LevelPreferences.saveLevel(this, 1)
+        } else if (level == 2) {
+            btnReflecting.isEnabled = true
+        } else if (level == 3) {
+            btnReflecting.isEnabled = true
+            btnPractice.isEnabled = true
         }
     }
 

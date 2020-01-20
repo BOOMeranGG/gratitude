@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentActivity
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
+import com.orange_infinity.gratitude.model.preferences.LevelPreferences
 import kotlinx.android.synthetic.main.fiil_record_fragment.*
 import kotlinx.android.synthetic.main.fiil_record_fragment.view.*
 import java.text.SimpleDateFormat
@@ -101,12 +102,12 @@ class FillRecordFragment : Fragment() {
     }
 
     private fun handleNewLevel(level: Int) {
-        if (level == 1) { // activity
-            //
-        } else if (level == 2) {
-            //
-        } else {
-            //
+        if (level == 1) { // set up level 2
+            LevelPreferences.saveLevel(activity, 2)
+        } else if (level == 2) { // set up level 3 (free)
+            LevelPreferences.saveLevel(activity, 3)
+        } else {    // set up??
+            LevelPreferences.saveLevel(activity, 4)
         }
     }
 
