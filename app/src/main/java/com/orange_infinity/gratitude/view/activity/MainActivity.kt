@@ -21,9 +21,18 @@ class MainActivity : BaseActivity() {
         Toast.makeText(this, "Last entry date: $lastDate", Toast.LENGTH_LONG).show()
         EntryDateRegister.saveEntryDate(this)
 
-        //checkLevel()
+        btnReflecting.isEnabled = false
+        btnPractice.isEnabled = false
 
         btnNoticing.setOnClickListener {
+            goToNoticing()
+        }
+
+        btnReflecting.setOnClickListener {
+            goToNoticing()
+        }
+
+        btnPractice.setOnClickListener {
             goToNoticing()
         }
 

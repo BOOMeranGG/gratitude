@@ -41,7 +41,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnNoticing"
             app:layout_constraintBottom_toTopOf="@id/btnPractice"
-            android:enabled="false"
             android:text="Reflecting &amp; Appreciating"/>
 
         <TextView
@@ -51,7 +50,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnReflecting"
             app:layout_constraintBottom_toTopOf="@id/btnJournal"
-            android:enabled="false"
             android:text="Practicing Gratitude"/>
 
         <TextView
