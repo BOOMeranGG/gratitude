@@ -88,6 +88,8 @@ class FillRecordFragment : Fragment() {
         } else {
             v.tvTitle.text = "WHAT ARE YOU GRATEFUL FOR IN YOUR LIFE?"
             v.tvDescription.text = ""
+            v.imgMicrophone.setImageResource(R.drawable.microphone)
+            v.imgPaint.setImageResource(R.drawable.paint)
         }
     }
 
