@@ -25,7 +25,17 @@ class MainActivity : BaseActivity() {
         btnPractice.isEnabled = false
 
         btnNoticing.setOnClickListener {
-            goToNoticing()
+            val level = LevelPreferences.getLevel(this)
+            if (level != null && level == 0) {
+                LevelPreferences.saveLevel(this, 1)
+                val intent = Intent(this, CitationActivity::class.java)
+                intent.putExtra(IMAGE_R_ID_KEY, R.drawable.level1)
+                intent.putExtra(IS_FIRST_KEY, true)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+                startActivity(intent)
+            } else {
+                goToNoticing()
+            }
         }
 
         btnReflecting.setOnClickListener {
@@ -38,11 +48,13 @@ class MainActivity : BaseActivity() {
 
         btnJournal.setOnClickListener {
             val intent = Intent(this, JournalActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
 
         imgShare.setOnClickListener {
             val intent = Intent(this, ShareActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
     }
@@ -55,7 +67,7 @@ class MainActivity : BaseActivity() {
     private fun checkLevel() {
         val level = LevelPreferences.getLevel(this)
         if (level == null || level == 0) {
-            LevelPreferences.saveLevel(this, 1)
+            //LevelPreferences.saveLevel(this, 1)
         } else if (level == 2) {
             btnReflecting.isEnabled = true
         } else if (level == 3) {
@@ -75,6 +87,7 @@ class MainActivity : BaseActivity() {
             override fun onPostExecute(result: Int) {
                 val intent = Intent(this@MainActivity, NoticingActivity::class.java)
                 intent.putExtra(COUNT_OF_RECORDS_KEY, result)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
             }
         }.execute()

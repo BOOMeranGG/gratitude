@@ -2,6 +2,7 @@ package com.orange_infinity.gratitude.view.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,6 +14,8 @@ import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
 import com.orange_infinity.gratitude.model.preferences.LevelPreferences
+import com.orange_infinity.gratitude.view.activity.CitationActivity
+import com.orange_infinity.gratitude.view.activity.IMAGE_R_ID_KEY
 import kotlinx.android.synthetic.main.fiil_record_fragment.*
 import kotlinx.android.synthetic.main.fiil_record_fragment.view.*
 import java.text.SimpleDateFormat
@@ -104,8 +107,16 @@ class FillRecordFragment : Fragment() {
     private fun handleNewLevel(level: Int) {
         if (level == 1) { // set up level 2
             LevelPreferences.saveLevel(activity, 2)
+            val intent = Intent(activity, CitationActivity::class.java)
+            intent.putExtra(IMAGE_R_ID_KEY, R.drawable.level2)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
         } else if (level == 2) { // set up level 3 (free)
             LevelPreferences.saveLevel(activity, 3)
+            val intent = Intent(activity, CitationActivity::class.java)
+            intent.putExtra(IMAGE_R_ID_KEY, R.drawable.level3)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
         } else {    // set up??
             LevelPreferences.saveLevel(activity, 4)
         }
