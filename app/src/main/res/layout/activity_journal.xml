@@ -8,14 +8,20 @@
     android:background="@drawable/background"
     tools:context=".view.activity.JournalActivity">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorTransparentLightGray">
+
+    </View>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRecords"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/colorTransparentLightGray">
+        app:layout_constraintEnd_toEndOf="parent">
 
 
     </androidx.recyclerview.widget.RecyclerView>
