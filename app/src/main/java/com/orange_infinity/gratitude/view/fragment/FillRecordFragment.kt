@@ -18,7 +18,6 @@ import com.orange_infinity.gratitude.model.preferences.IS_JOURNAL_NOT_EMPTY
 import com.orange_infinity.gratitude.model.preferences.LevelPreferences
 import com.orange_infinity.gratitude.model.preferences.SystemPreferences
 import com.orange_infinity.gratitude.presenter.AudioRecorder
-import com.orange_infinity.gratitude.presenter.ImageRecorder
 import com.orange_infinity.gratitude.saveImageToGallery
 import com.orange_infinity.gratitude.view.activity.CitationActivity
 import com.orange_infinity.gratitude.view.activity.IMAGE_R_ID_KEY
@@ -35,7 +34,6 @@ class FillRecordFragment : Fragment() {
 
     private lateinit var activity: Activity
     private val audioRecorder = AudioRecorder()
-    private val imageRecord = ImageRecorder()
     private var countOfRecords: Int = 1
     private var isTop = true
     private var recordBitmap: Bitmap? = null
