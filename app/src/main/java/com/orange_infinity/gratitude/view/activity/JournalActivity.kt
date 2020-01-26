@@ -1,16 +1,19 @@
 package com.orange_infinity.gratitude.view.activity
 
 import android.annotation.SuppressLint
+import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
+import com.orange_infinity.gratitude.readBitmapFromDisk
 import kotlinx.android.synthetic.main.list_record.view.*
 
 class JournalActivity : BaseActivity() {
@@ -87,12 +90,28 @@ class JournalActivity : BaseActivity() {
                 recordView.line2.visibility = View.GONE
             }
 
+            if (!record.imageName.isNullOrBlank()) {
+                val testBitmap = readBitmapFromDisk(record.imageName!!)
+                if (testBitmap != null) {
+                    //recordView.imgRecord.setImageBitmap(testBitmap)
+                    val width = testBitmap.width
+                    val height = testBitmap.height
+                    val del = (width / 90).coerceAtMost(height / 90)
+                    recordView.imgRecord.setImageBitmap(Bitmap.createScaledBitmap(testBitmap, width / del, height / del, false))
+
+                    println(2)
+                }
+            }
+
             recordView.listRecordLayout.setOnClickListener(this)
         }
 
         override fun onClick(v: View) {
         }
+
+        // + асинк метод для преобразования картинок imgRecord
     }
+
 
     private inner class RecordAdapter(var records: List<Record>) : RecyclerView.Adapter<RecordHolder>() {
 

@@ -10,4 +10,5 @@ class Record {
     var id: Int? = null
     var date: String? = null
     var description: String = ""
+    var imageName: String? = null
 }
