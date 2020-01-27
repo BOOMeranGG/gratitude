@@ -48,7 +48,6 @@
         android:layout_marginTop="12dp"
         android:layout_height="match_parent">
 
-
         <EditText
             android:id="@+id/editRecord"
             android:layout_width="match_parent"
@@ -79,7 +78,17 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="8dp"
             android:src="@drawable/paint_red"/>
-
+        
+        <ImageView
+            android:id="@+id/imgLoaded"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:visibility="gone"
+            android:scaleType="centerInside"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

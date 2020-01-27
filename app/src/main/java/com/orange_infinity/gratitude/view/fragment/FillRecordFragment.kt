@@ -76,6 +76,11 @@ class FillRecordFragment : Fragment() {
             startActivityForResult(photoPickerIntent, GALLERY_REQUEST)
         }
 
+        v.imgLoaded.setOnClickListener {
+            imgLoaded.visibility = View.GONE
+            recordBitmap = null
+        }
+
         return v
     }
 
@@ -87,6 +92,13 @@ class FillRecordFragment : Fragment() {
 
             try {
                 recordBitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, selectedImage)
+                val width = recordBitmap!!.width
+                val height = recordBitmap!!.height
+                val divider = (width / 90).coerceAtMost(height / 90)
+                val scaledBitmap = Bitmap.createScaledBitmap(recordBitmap, width / divider, height / divider, false)
+
+                imgLoaded.setImageBitmap(scaledBitmap)
+                imgLoaded.visibility = View.VISIBLE
             } catch (ex: IOException) {
             }
         }
