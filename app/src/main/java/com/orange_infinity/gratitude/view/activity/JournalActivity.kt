@@ -26,11 +26,6 @@ class JournalActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_journal)
 
-        //getAllNoticing()
-//        btnCreateNoticing.setOnClickListener {
-//            saveNoticing()
-//        }
-
         init()
         getAllNoticing()
     }
@@ -64,12 +59,7 @@ class JournalActivity : BaseActivity() {
 
             override fun onPostExecute(allRecords: List<Record>) {
                 records = allRecords as MutableList<Record>
-                //init()
                 updateRecycler()
-//                tvNoticing.text = ""
-//                allRecords.forEach { record ->
-//                    tvNoticing.text = "${record.id}.) ${record.description} ${tvNoticing.text}\n"
-//                }
             }
         }.execute()
     }

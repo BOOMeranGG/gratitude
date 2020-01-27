@@ -52,12 +52,10 @@ class FillRecordFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.fiil_record_fragment, container, false)
 
-        if (countOfRecords < 3) {
-            createFirstLevelText(v)
-        } else if (countOfRecords < 6) {
-            createSecondLevelText(v)
-        } else {
-            createFreeLevel(v)
+        when {
+            countOfRecords < 3 -> createFirstLevelText(v)
+            countOfRecords < 6 -> createSecondLevelText(v)
+            else -> createFreeLevel(v)
         }
 
         v.imgMicrophone.setOnClickListener {
@@ -81,8 +79,6 @@ class FillRecordFragment : Fragment() {
 
             try {
                 recordBitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, selectedImage)
-                // Do smth with bitmap
-                println(2)
             } catch (ex: IOException) {
             }
         }
@@ -93,7 +89,7 @@ class FillRecordFragment : Fragment() {
         super.onDestroyView()
     }
 
-    fun saveRecord() {
+    private fun saveRecord() {
         val text = editRecord.text.toString()
         if (text.isNotEmpty()) {
             SystemPreferences.saveBoolean(activity, IS_JOURNAL_NOT_EMPTY, true)
@@ -102,6 +98,7 @@ class FillRecordFragment : Fragment() {
                 imageName = UUID.randomUUID().toString()
                 saveImageToGallery(recordBitmap!!, imageName)
             }
+
             saveNoticing(text, imageName)
             checkNewLevel()
         }
