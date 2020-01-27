@@ -1,8 +1,11 @@
 package com.orange_infinity.gratitude.view.fragment
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.os.Bundle
@@ -10,6 +13,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
@@ -17,7 +22,7 @@ import com.orange_infinity.gratitude.model.database.entities.Record
 import com.orange_infinity.gratitude.model.preferences.IS_JOURNAL_NOT_EMPTY
 import com.orange_infinity.gratitude.model.preferences.LevelPreferences
 import com.orange_infinity.gratitude.model.preferences.SystemPreferences
-import com.orange_infinity.gratitude.presenter.AudioRecorder
+import com.orange_infinity.gratitude.presenter.AudioController
 import com.orange_infinity.gratitude.saveImageToGallery
 import com.orange_infinity.gratitude.view.activity.CitationActivity
 import com.orange_infinity.gratitude.view.activity.IMAGE_R_ID_KEY
@@ -29,14 +34,17 @@ import java.util.*
 
 
 const val GALLERY_REQUEST = 1
+const val REQUEST_RECORD_AUDIO = 2
 
 class FillRecordFragment : Fragment() {
 
     private lateinit var activity: Activity
-    private val audioRecorder = AudioRecorder()
+    private val audioRecorder = AudioController()
     private var countOfRecords: Int = 1
     private var isTop = true
     private var recordBitmap: Bitmap? = null
+    private var soundName: String? = null
+    private var isRecordAudio = false
 
     companion object {
         fun newInstance(activity: Activity, countOfRecords: Int, isTop: Boolean): FillRecordFragment {
@@ -59,7 +67,7 @@ class FillRecordFragment : Fragment() {
         }
 
         v.imgMicrophone.setOnClickListener {
-
+            requestPermission(activity)
         }
 
         v.imgPaint.setOnClickListener {
@@ -86,7 +94,49 @@ class FillRecordFragment : Fragment() {
 
     override fun onDestroyView() {
         saveRecord()
+        audioRecorder.releaseRecorder()
         super.onDestroyView()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUEST_RECORD_AUDIO) {
+            if (hasPermissions(activity)) {
+                recordSound()
+            } else {
+                //requestPermission(activity)
+            }
+        }
+    }
+
+    private fun requestPermission(context: Activity) {
+        if (!hasPermissions(context)) {
+            ActivityCompat.requestPermissions(
+                context,
+                arrayOf(Manifest.permission.RECORD_AUDIO),
+                REQUEST_RECORD_AUDIO
+            )
+        } else {
+            recordSound()
+        }
+    }
+
+    private fun hasPermissions(context: Context): Boolean {
+        return ContextCompat.checkSelfPermission(
+            context,
+            Manifest.permission.RECORD_AUDIO
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun recordSound() {
+        if (!isRecordAudio) {
+            soundName = UUID.randomUUID().toString()
+            audioRecorder.recordStart(soundName!!)
+            isRecordAudio = true
+        } else {
+            audioRecorder.recordStop()
+            isRecordAudio = false
+        }
     }
 
     private fun saveRecord() {
@@ -94,12 +144,13 @@ class FillRecordFragment : Fragment() {
         if (text.isNotEmpty()) {
             SystemPreferences.saveBoolean(activity, IS_JOURNAL_NOT_EMPTY, true)
             var imageName = ""
+
             if (recordBitmap != null) {
                 imageName = UUID.randomUUID().toString()
                 saveImageToGallery(recordBitmap!!, imageName)
             }
 
-            saveNoticing(text, imageName)
+            saveNoticing(text, imageName, soundName)
             checkNewLevel()
         }
     }
@@ -166,7 +217,7 @@ class FillRecordFragment : Fragment() {
     }
 
     @SuppressLint("StaticFieldLeak")
-    private fun saveNoticing(description: String, imageName: String) {
+    private fun saveNoticing(description: String, imageName: String, soundName: String?) {
         object : AsyncTask<Unit, Unit, Unit>() {
 
             override fun doInBackground(vararg params: Unit) {
@@ -176,6 +227,7 @@ class FillRecordFragment : Fragment() {
                 record.date = currentDate
                 record.description = description
                 record.imageName = imageName
+                record.soundName = soundName
 
                 AppDatabase.getInstance(activity).getRecordDao().insert(record)
             }

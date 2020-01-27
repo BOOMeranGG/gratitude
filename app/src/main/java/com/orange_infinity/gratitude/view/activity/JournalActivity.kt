@@ -13,15 +13,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
+import com.orange_infinity.gratitude.presenter.AudioController
 import com.orange_infinity.gratitude.presenter.ImageLoader
 import com.orange_infinity.gratitude.readBitmapFromDisk
 import com.orange_infinity.gratitude.view.activity.interfaces.ImageLoaderOwner
+import kotlinx.android.synthetic.main.list_record.*
 import kotlinx.android.synthetic.main.list_record.view.*
 
 class JournalActivity : BaseActivity(), ImageLoaderOwner {
 
     private lateinit var recordRecycler: RecyclerView
     private var records = mutableListOf<Record>()
+    private val audioController = AudioController()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,6 +90,12 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
 
             if (!record.imageName.isNullOrBlank()) {
                 ImageLoader(record.imageName!!, this@JournalActivity).execute(recordView.imgRecord)
+            }
+            if (!record.soundName.isNullOrBlank()) {
+                recordView.imgSound.setImageResource(R.drawable.ic_sound)
+                recordView.imgSound.setOnClickListener {
+                    audioController.startPlay(record.soundName!!)
+                }
             }
 
             recordView.listRecordLayout.setOnClickListener(this)

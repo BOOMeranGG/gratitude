@@ -11,4 +11,5 @@ class Record {
     var date: String? = null
     var description: String = ""
     var imageName: String? = null
+    var soundName: String? = null
 }

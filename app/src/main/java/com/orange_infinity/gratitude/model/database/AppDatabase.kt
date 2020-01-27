@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
 import com.orange_infinity.gratitude.model.database.entities.RecordDao
 
-@Database(entities = [Record::class], version = 3)
+@Database(entities = [Record::class], version = 4)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun getRecordDao(): RecordDao

@@ -28,7 +28,6 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
 
         val lastDate = EntryDateRegister.getLastEntryDate(this)
-        Toast.makeText(this, "Last entry date: $lastDate", Toast.LENGTH_LONG).show()
         EntryDateRegister.saveEntryDate(this)
 
         btnReflecting.isEnabled = false

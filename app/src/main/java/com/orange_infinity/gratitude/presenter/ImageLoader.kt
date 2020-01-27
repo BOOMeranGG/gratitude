@@ -32,7 +32,7 @@ class ImageLoader(
             RecordImagesCache.imageCache.put(fileName, scaledBitmap)
 
             recordImage?.setImageBitmap(scaledBitmap)
-            loaderOwner.onLoadComplete()
         }
+        loaderOwner.onLoadComplete()
     }
 }
