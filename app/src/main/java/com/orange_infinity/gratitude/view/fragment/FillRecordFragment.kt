@@ -94,7 +94,7 @@ class FillRecordFragment : Fragment() {
                 recordBitmap = MediaStore.Images.Media.getBitmap(activity.contentResolver, selectedImage)
                 val width = recordBitmap!!.width
                 val height = recordBitmap!!.height
-                val divider = (width / 90).coerceAtMost(height / 90)
+                val divider = (width / 180).coerceAtMost(height / 180)
                 val scaledBitmap = Bitmap.createScaledBitmap(recordBitmap, width / divider, height / divider, false)
 
                 imgLoaded.setImageBitmap(scaledBitmap)
