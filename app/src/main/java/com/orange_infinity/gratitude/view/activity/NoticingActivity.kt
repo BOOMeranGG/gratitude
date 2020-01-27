@@ -23,16 +23,6 @@ class NoticingActivity : BaseActivity() {
         Log.i(com.orange_infinity.gratitude.TAG, "Count of all records: $countOfRecords")
 
         goToFillingRecords()
-
-//        val fm = supportFragmentManager
-//        var fragment = fm.findFragmentById(R.id.layoutNoticingContainer)
-//
-//        if (fragment == null) {
-//            fragment = LevelNoticingFragment.newInstance(this)
-//            fm.beginTransaction()
-//                .add(R.id.layoutNoticingContainer, fragment)
-//                .commit()
-//        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -69,7 +59,5 @@ class NoticingActivity : BaseActivity() {
                 return PracticingGratitudeFragment.newInstance(this@NoticingActivity, countOfRecords)
             }
         }.execute()
-
-
     }
 }

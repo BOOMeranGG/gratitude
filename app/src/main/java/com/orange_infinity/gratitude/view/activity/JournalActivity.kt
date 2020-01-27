@@ -15,9 +15,10 @@ import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
 import com.orange_infinity.gratitude.presenter.ImageLoader
 import com.orange_infinity.gratitude.readBitmapFromDisk
+import com.orange_infinity.gratitude.view.activity.interfaces.ImageLoaderOwner
 import kotlinx.android.synthetic.main.list_record.view.*
 
-class JournalActivity : BaseActivity() {
+class JournalActivity : BaseActivity(), ImageLoaderOwner {
 
     private lateinit var recordRecycler: RecyclerView
     private var records = mutableListOf<Record>()
@@ -35,6 +36,9 @@ class JournalActivity : BaseActivity() {
         recordRecycler.removeAllViews()
         init()
         updateRecycler()
+    }
+
+    override fun onLoadComplete() {
     }
 
     private fun updateRecycler() {
@@ -82,7 +86,7 @@ class JournalActivity : BaseActivity() {
             }
 
             if (!record.imageName.isNullOrBlank()) {
-                ImageLoader(record.imageName!!).execute(recordView.imgRecord)
+                ImageLoader(record.imageName!!, this@JournalActivity).execute(recordView.imgRecord)
             }
 
             recordView.listRecordLayout.setOnClickListener(this)
@@ -91,7 +95,6 @@ class JournalActivity : BaseActivity() {
         override fun onClick(v: View) {
         }
     }
-
 
     private inner class RecordAdapter(var records: List<Record>) : RecyclerView.Adapter<RecordHolder>() {
 
