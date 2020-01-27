@@ -152,6 +152,8 @@ class FillRecordFragment : Fragment() {
 
             saveNoticing(text, imageName, soundName)
             checkNewLevel()
+        } else if (!soundName.isNullOrBlank()) {
+            audioRecorder.deleteAudio(soundName!!)
         }
     }
 

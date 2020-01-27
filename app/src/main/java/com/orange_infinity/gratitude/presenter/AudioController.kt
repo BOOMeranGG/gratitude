@@ -49,9 +49,14 @@ class AudioController {
         mediaRecorder = MediaRecorder()
     }
 
+    fun isAudioExist(fileName: String): Boolean {
+        return File(getMediaPath() + fileName).exists()
+    }
+
     fun deleteAudio(fileName: String) {
         val file = File(getMediaPath() + fileName)
         if (file.exists()) {
+            file.delete()
         }
     }
 

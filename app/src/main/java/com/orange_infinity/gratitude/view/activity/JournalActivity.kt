@@ -44,6 +44,11 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
     override fun onLoadComplete() {
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        audioController.stopPlay()
+    }
+
     private fun updateRecycler() {
         val adapter = recordRecycler.adapter as RecordAdapter
         adapter.records = records
@@ -91,7 +96,7 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
             if (!record.imageName.isNullOrBlank()) {
                 ImageLoader(record.imageName!!, this@JournalActivity).execute(recordView.imgRecord)
             }
-            if (!record.soundName.isNullOrBlank()) {
+            if (!record.soundName.isNullOrBlank() && audioController.isAudioExist(record.soundName!!)) {
                 recordView.imgSound.setImageResource(R.drawable.ic_sound)
                 recordView.imgSound.setOnClickListener {
                     audioController.startPlay(record.soundName!!)
