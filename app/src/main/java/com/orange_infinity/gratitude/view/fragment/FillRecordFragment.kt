@@ -31,6 +31,10 @@ import kotlinx.android.synthetic.main.fiil_record_fragment.view.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import android.util.Log
+import com.devlomi.record_view.OnRecordListener
+import com.devlomi.record_view.RecordButton
+import com.orange_infinity.gratitude.TAG
 
 
 const val GALLERY_REQUEST = 1
@@ -45,6 +49,7 @@ class FillRecordFragment : Fragment() {
     private var recordBitmap: Bitmap? = null
     private var soundName: String? = null
     private var isRecordAudio = false
+    private lateinit var recordButton: RecordButton
 
     companion object {
         fun newInstance(activity: Activity, countOfRecords: Int, isTop: Boolean): FillRecordFragment {
@@ -66,9 +71,43 @@ class FillRecordFragment : Fragment() {
             else -> createFreeLevel(v)
         }
 
-        v.imgMicrophone.setOnClickListener {
-            requestPermission(activity)
-        }
+        recordButton = v.findViewById(R.id.imgMicrophone)
+        recordButton.setRecordView(v.recordView)
+
+
+        v.recordView.setOnRecordListener(object : OnRecordListener {
+            override fun onStart() {
+                //Start Recording..
+                if (!hasPermissions(activity)) {
+                    requestPermission(activity)
+                } else {
+                    recordSound()
+                }
+                Log.i(TAG, "onStart")
+            }
+
+            override fun onCancel() {
+                //On Swipe To Cancel
+                Log.i(TAG, "onCancel")
+                audioRecorder.deleteAudio(soundName ?: return)
+                soundName = null
+            }
+
+            override fun onFinish(recordTime: Long) {
+                //Stop Recording..
+                //val time = getHumanTimeText(recordTime)
+                Log.i(TAG, "onFinish")
+
+                //Log.d("RecordTime", time)
+            }
+
+            override fun onLessThanSecond() {
+                //When the record time is less than One Second
+                Log.i(TAG, "onLessThanSecond")
+                audioRecorder.deleteAudio(soundName ?: return)
+                soundName = null
+            }
+        })
 
         v.imgPaint.setOnClickListener {
             val photoPickerIntent = Intent(Intent.ACTION_PICK)
@@ -114,7 +153,7 @@ class FillRecordFragment : Fragment() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_RECORD_AUDIO) {
             if (hasPermissions(activity)) {
-                recordSound()
+                //recordSound()
             } else {
                 //requestPermission(activity)
             }
@@ -129,7 +168,7 @@ class FillRecordFragment : Fragment() {
                 REQUEST_RECORD_AUDIO
             )
         } else {
-            recordSound()
+            //recordSound()
         }
     }
 
@@ -176,7 +215,7 @@ class FillRecordFragment : Fragment() {
         } else {
             v.tvTitle.text = "What could you be grateful for today?"
             v.tvDescription.text = "Good weather? Cup of coffee? A loved one?"
-            v.imgMicrophone.setImageResource(R.drawable.microphone)
+            //v.imgMicrophone.setImageResource(R.drawable.microphone)
             v.imgPaint.setImageResource(R.drawable.paint)
         }
     }
@@ -188,7 +227,7 @@ class FillRecordFragment : Fragment() {
         } else {
             v.tvTitle.text = "What could you be grateful for today?"
             v.tvDescription.text = "Good weather? Cup of coffee? A loved one?"
-            v.imgMicrophone.setImageResource(R.drawable.microphone)
+            //v.imgMicrophone.setImageResource(R.drawable.microphone)
             v.imgPaint.setImageResource(R.drawable.paint)
         }
     }
@@ -200,7 +239,7 @@ class FillRecordFragment : Fragment() {
         } else {
             v.tvTitle.text = "WHAT ARE YOU GRATEFUL FOR IN YOUR LIFE?"
             v.tvDescription.text = ""
-            v.imgMicrophone.setImageResource(R.drawable.microphone)
+            //v.imgMicrophone.setImageResource(R.drawable.microphone)
             v.imgPaint.setImageResource(R.drawable.paint)
         }
     }
