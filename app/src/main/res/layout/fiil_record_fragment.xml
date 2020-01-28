@@ -58,6 +58,7 @@
             android:gravity="top"
             android:hint="Type here..."
             android:textSize="12sp"
+            android:background="@android:color/transparent"
             android:textColor="@color/colorBlueText"
             android:inputType="textMultiLine"/>
 
@@ -96,9 +97,10 @@
             android:id="@+id/recordView"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/imgMicrophone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/imgMicrophone"
+            android:layout_marginEnd="8dp"
             app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
             app:slide_to_cancel_arrow_color="#000000"
             app:slide_to_cancel_bounds="8dp"

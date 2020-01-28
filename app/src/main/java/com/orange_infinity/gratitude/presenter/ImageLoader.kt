@@ -7,7 +7,7 @@ import com.orange_infinity.gratitude.model.RecordImagesCache
 import com.orange_infinity.gratitude.readBitmapFromDisk
 import com.orange_infinity.gratitude.view.activity.interfaces.ImageLoaderOwner
 
-const val MINI = "_mini"
+const val IMAGE_MINI = "_mini"
 
 class ImageLoader(
     private val fileName: String,

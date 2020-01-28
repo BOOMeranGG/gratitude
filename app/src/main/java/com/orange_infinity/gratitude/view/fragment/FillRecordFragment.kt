@@ -35,6 +35,7 @@ import android.util.Log
 import com.devlomi.record_view.OnRecordListener
 import com.devlomi.record_view.RecordButton
 import com.orange_infinity.gratitude.TAG
+import com.orange_infinity.gratitude.presenter.IMAGE_MINI
 
 
 const val GALLERY_REQUEST = 1
@@ -47,6 +48,7 @@ class FillRecordFragment : Fragment() {
     private var countOfRecords: Int = 1
     private var isTop = true
     private var recordBitmap: Bitmap? = null
+    private var scaledBitmap: Bitmap? = null
     private var soundName: String? = null
     private var isRecordAudio = false
     private lateinit var recordButton: RecordButton
@@ -82,6 +84,7 @@ class FillRecordFragment : Fragment() {
                     requestPermission(activity)
                 } else {
                     recordSound()
+                    v.editRecord.isEnabled = false
                 }
                 Log.i(TAG, "onStart")
             }
@@ -91,13 +94,14 @@ class FillRecordFragment : Fragment() {
                 Log.i(TAG, "onCancel")
                 audioRecorder.deleteAudio(soundName ?: return)
                 soundName = null
+                v.editRecord.isEnabled = true
             }
 
             override fun onFinish(recordTime: Long) {
                 //Stop Recording..
                 //val time = getHumanTimeText(recordTime)
                 Log.i(TAG, "onFinish")
-
+                v.editRecord.isEnabled = true
                 //Log.d("RecordTime", time)
             }
 
@@ -106,6 +110,7 @@ class FillRecordFragment : Fragment() {
                 Log.i(TAG, "onLessThanSecond")
                 audioRecorder.deleteAudio(soundName ?: return)
                 soundName = null
+                v.editRecord.isEnabled = true
             }
         })
 
@@ -134,7 +139,7 @@ class FillRecordFragment : Fragment() {
                 val width = recordBitmap!!.width
                 val height = recordBitmap!!.height
                 val divider = (width / 180).coerceAtMost(height / 180)
-                val scaledBitmap = Bitmap.createScaledBitmap(recordBitmap, width / divider, height / divider, false)
+                scaledBitmap = Bitmap.createScaledBitmap(recordBitmap, width / divider, height / divider, false)
 
                 imgLoaded.setImageBitmap(scaledBitmap)
                 imgLoaded.visibility = View.VISIBLE
@@ -199,6 +204,7 @@ class FillRecordFragment : Fragment() {
             if (recordBitmap != null) {
                 imageName = UUID.randomUUID().toString()
                 saveImageToGallery(recordBitmap!!, imageName)
+                saveImageToGallery(scaledBitmap!!, imageName + IMAGE_MINI)
             }
 
             saveNoticing(text, imageName, soundName)
