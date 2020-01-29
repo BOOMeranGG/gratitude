@@ -5,22 +5,22 @@ import android.util.Log
 import com.orange_infinity.gratitude.TAG
 
 private const val FILE_SETTINGS_NAME = "settingsFileName"
-private const val LEVEL_KEY = "levelKey"
+private const val COUNT_OF_RECORDS = "levelKey"
 
-object LevelPreferences {
+object RecordCountPreferences {
 
-    fun saveLevel(context: Context, level: Int) {
+    fun saveRecordCount(context: Context, countOfRecords: Int) {
         val preferences = context.getSharedPreferences(FILE_SETTINGS_NAME, Context.MODE_PRIVATE)
         val editor = preferences.edit()
 
-        editor.putInt(LEVEL_KEY, level)
+        editor.putInt(COUNT_OF_RECORDS, countOfRecords)
 
-        Log.i(TAG, "Save current level: $level")
+        Log.i(TAG, "Save current countOfRecords: $countOfRecords")
         editor.apply()
     }
 
-    fun getLevel(context: Context): Int? {
+    fun getCountOfRecords(context: Context): Int? {
         val preferences = context.getSharedPreferences(FILE_SETTINGS_NAME, Context.MODE_PRIVATE)
-        return preferences.getInt(LEVEL_KEY, 0)
+        return preferences.getInt(COUNT_OF_RECORDS, 0)
     }
 }

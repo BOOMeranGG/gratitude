@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_citation.*
 
 const val IMAGE_R_ID_KEY = "imageRIdKey"
 const val IS_FIRST_KEY = "isFirst"
-const val SHOW_SECOND = 5
+const val SHOW_SECOND = 6
 
 class CitationActivity : BaseActivity(), MomentzCallback {
 

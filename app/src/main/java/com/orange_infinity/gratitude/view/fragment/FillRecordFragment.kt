@@ -10,32 +10,27 @@ import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.devlomi.record_view.OnRecordListener
+import com.devlomi.record_view.RecordButton
 import com.orange_infinity.gratitude.R
-import com.orange_infinity.gratitude.model.database.AppDatabase
+import com.orange_infinity.gratitude.TAG
 import com.orange_infinity.gratitude.model.database.entities.Record
-import com.orange_infinity.gratitude.model.preferences.IS_JOURNAL_NOT_EMPTY
-import com.orange_infinity.gratitude.model.preferences.LevelPreferences
-import com.orange_infinity.gratitude.model.preferences.SystemPreferences
-import com.orange_infinity.gratitude.useCase.AudioController
 import com.orange_infinity.gratitude.saveImageToGallery
-import com.orange_infinity.gratitude.view.activity.CitationActivity
-import com.orange_infinity.gratitude.view.activity.IMAGE_R_ID_KEY
+import com.orange_infinity.gratitude.useCase.AudioController
+import com.orange_infinity.gratitude.useCase.IMAGE_MINI
+import com.orange_infinity.gratitude.useCase.RecordEntityManager
 import kotlinx.android.synthetic.main.fiil_record_fragment.*
 import kotlinx.android.synthetic.main.fiil_record_fragment.view.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
-import android.util.Log
-import com.devlomi.record_view.OnRecordListener
-import com.devlomi.record_view.RecordButton
-import com.orange_infinity.gratitude.TAG
-import com.orange_infinity.gratitude.useCase.IMAGE_MINI
 
 
 const val GALLERY_REQUEST = 1
@@ -44,6 +39,7 @@ const val REQUEST_RECORD_AUDIO = 2
 class FillRecordFragment : Fragment() {
 
     private lateinit var activity: Activity
+    private lateinit var recordEntityManager: RecordEntityManager
     private val audioRecorder = AudioController()
     private var countOfRecords: Int = 1
     private var isTop = true
@@ -59,6 +55,7 @@ class FillRecordFragment : Fragment() {
             instance.activity = activity
             instance.countOfRecords = countOfRecords
             instance.isTop = isTop
+            instance.recordEntityManager = RecordEntityManager(activity)
 
             return instance
         }
@@ -197,7 +194,7 @@ class FillRecordFragment : Fragment() {
     private fun saveRecord() {
         val text = editRecord.text.toString()
         if (text.isNotEmpty()) {
-            SystemPreferences.saveBoolean(activity, IS_JOURNAL_NOT_EMPTY, true)
+            //SystemPreferences.saveBoolean(activity, IS_JOURNAL_NOT_EMPTY, true)
             var imageName = ""
 
             if (recordBitmap != null) {
@@ -207,7 +204,7 @@ class FillRecordFragment : Fragment() {
             }
 
             saveNoticing(text, imageName, soundName)
-            checkNewLevel()
+            //checkNewLevel()
         } else if (!soundName.isNullOrBlank()) {
             audioRecorder.deleteAudio(soundName!!)
         }
@@ -250,28 +247,28 @@ class FillRecordFragment : Fragment() {
     }
 
     private fun checkNewLevel() {
-        countOfRecords++
-        if (countOfRecords % 3 == 0) {
-            startNewLevelWithCitation(countOfRecords / 3)
-        }
+//        countOfRecords++
+//        if (countOfRecords % 3 == 0) {
+//            startNewLevelWithCitation(countOfRecords / 3)
+//        }
     }
 
     private fun startNewLevelWithCitation(level: Int) {
-        if (level == 1) { // set up level 2
-            LevelPreferences.saveLevel(activity, 2)
-            val intent = Intent(activity, CitationActivity::class.java)
-            intent.putExtra(IMAGE_R_ID_KEY, R.drawable.end_one)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(intent)
-        } else if (level == 2) { // set up level 3 (free)
-            LevelPreferences.saveLevel(activity, 3)
-            val intent = Intent(activity, CitationActivity::class.java)
-            intent.putExtra(IMAGE_R_ID_KEY, R.drawable.level3)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(intent)
-        } else {    // set up??
-            LevelPreferences.saveLevel(activity, 4)
-        }
+//        if (level == 1) { // set up level 2
+//            RecordCountPreferences.saveRecordCount(activity, 2)
+//            val intent = Intent(activity, CitationActivity::class.java)
+//            intent.putExtra(IMAGE_R_ID_KEY, R.drawable.end_one)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+//            startActivity(intent)
+//        } else if (level == 2) { // set up level 3 (free)
+//            RecordCountPreferences.saveRecordCount(activity, 3)
+//            val intent = Intent(activity, CitationActivity::class.java)
+//            intent.putExtra(IMAGE_R_ID_KEY, R.drawable.level3)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+//            startActivity(intent)
+//        } else {    // set up??
+//            RecordCountPreferences.saveRecordCount(activity, 4)
+//        }
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -287,7 +284,8 @@ class FillRecordFragment : Fragment() {
                 record.imageName = imageName
                 record.soundName = soundName
 
-                AppDatabase.getInstance(activity).getRecordDao().insert(record)
+                //AppDatabase.getInstance(activity).getRecordDao().insert(record)
+                recordEntityManager.saveRecord(record)
             }
 
         }.execute()

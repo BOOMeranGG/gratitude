@@ -8,15 +8,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.AsyncTask
 import android.os.Bundle
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.preferences.EntryDateRegister
-import com.orange_infinity.gratitude.model.preferences.IS_JOURNAL_NOT_EMPTY
-import com.orange_infinity.gratitude.model.preferences.LevelPreferences
-import com.orange_infinity.gratitude.model.preferences.SystemPreferences
+import com.orange_infinity.gratitude.model.preferences.RecordCountPreferences
 import kotlinx.android.synthetic.main.activity_main.*
 
 private const val REQUEST_READ_STORAGE = 113
@@ -36,9 +33,10 @@ class MainActivity : BaseActivity() {
         requestPermission(this)
 
         btnNoticing.setOnClickListener {
-            val level = LevelPreferences.getLevel(this)
-            if (level != null && level == 0) {
-                LevelPreferences.saveLevel(this, 1)
+            //val level = RecordCountPreferences.getCountOfRecords(this)
+            //if (level != null && level == 0) {
+            if (RecordCountPreferences.getCountOfRecords(this) == 0) {
+                //RecordCountPreferences.saveRecordCount(this, 1)
                 val intent = Intent(this, CitationActivity::class.java)
                 intent.putExtra(IMAGE_R_ID_KEY, R.drawable.level1)
                 intent.putExtra(IS_FIRST_KEY, true)
@@ -109,7 +107,7 @@ class MainActivity : BaseActivity() {
 
     private fun setEnabling() {
 //        setEnableFalseToAll()
-//        val level = LevelPreferences.getLevel(this)
+//        val level = RecordCountPreferences.getCountOfRecords(this)
 //        when (level) {
 //            null, 0, 1 -> {
 //                btnNoticing.isEnabled = true
