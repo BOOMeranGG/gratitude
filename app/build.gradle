@@ -47,4 +47,5 @@ dependencies {
     kapt "android.arch.persistence.room:compiler:1.1.1"
 
     implementation 'com.devlomi.record-view:record-view:2.0.1'
+    implementation 'com.github.bolaware:momentz:v1.0'
 }

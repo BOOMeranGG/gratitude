@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
-import com.orange_infinity.gratitude.presenter.IMAGE_MINI
-import com.orange_infinity.gratitude.presenter.ImageLoader
+import com.orange_infinity.gratitude.useCase.IMAGE_MINI
+import com.orange_infinity.gratitude.useCase.ImageLoader
 import com.orange_infinity.gratitude.view.activity.interfaces.ImageLoaderOwner
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -23,7 +23,7 @@ class SplashScreenActivity : AppCompatActivity() {
     private fun loadApp() {
         object : AsyncTask<Unit, Unit, Unit>(), ImageLoaderOwner {
 
-            private val countOfMaxLoadRecords = 10
+            private val countOfMaxLoadRecords = 15
             private var countOfLoadRecords = 0
             private var currentCount = 0
 

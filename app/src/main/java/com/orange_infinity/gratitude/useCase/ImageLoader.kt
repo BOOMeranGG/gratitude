@@ -1,4 +1,4 @@
-package com.orange_infinity.gratitude.presenter
+package com.orange_infinity.gratitude.useCase
 
 import android.graphics.Bitmap
 import android.os.AsyncTask

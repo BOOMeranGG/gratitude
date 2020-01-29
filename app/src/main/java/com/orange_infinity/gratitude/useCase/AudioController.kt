@@ -1,4 +1,4 @@
-package com.orange_infinity.gratitude.presenter
+package com.orange_infinity.gratitude.useCase
 
 import android.media.MediaPlayer
 import android.media.MediaRecorder

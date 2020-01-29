@@ -7,10 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".view.activity.CitationActivity">
 
-    <ImageView
-        android:id="@+id/imgMain"
+    <!--<ImageView-->
+        <!--android:id="@+id/imgMain"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:src="@drawable/start"/>-->
+
+    <FrameLayout
+        android:id="@+id/layoutCitation"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/start"/>
+        android:layout_height="match_parent">
+
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

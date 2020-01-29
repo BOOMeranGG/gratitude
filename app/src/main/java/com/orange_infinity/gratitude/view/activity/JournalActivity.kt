@@ -1,24 +1,20 @@
 package com.orange_infinity.gratitude.view.activity
 
 import android.annotation.SuppressLint
-import android.graphics.Bitmap
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
-import com.orange_infinity.gratitude.presenter.AudioController
-import com.orange_infinity.gratitude.presenter.IMAGE_MINI
-import com.orange_infinity.gratitude.presenter.ImageLoader
-import com.orange_infinity.gratitude.readBitmapFromDisk
+import com.orange_infinity.gratitude.useCase.AudioController
+import com.orange_infinity.gratitude.useCase.IMAGE_MINI
+import com.orange_infinity.gratitude.useCase.ImageLoader
 import com.orange_infinity.gratitude.view.activity.interfaces.ImageLoaderOwner
-import kotlinx.android.synthetic.main.list_record.*
 import kotlinx.android.synthetic.main.list_record.view.*
 
 class JournalActivity : BaseActivity(), ImageLoaderOwner {

@@ -22,7 +22,7 @@ import com.orange_infinity.gratitude.model.database.entities.Record
 import com.orange_infinity.gratitude.model.preferences.IS_JOURNAL_NOT_EMPTY
 import com.orange_infinity.gratitude.model.preferences.LevelPreferences
 import com.orange_infinity.gratitude.model.preferences.SystemPreferences
-import com.orange_infinity.gratitude.presenter.AudioController
+import com.orange_infinity.gratitude.useCase.AudioController
 import com.orange_infinity.gratitude.saveImageToGallery
 import com.orange_infinity.gratitude.view.activity.CitationActivity
 import com.orange_infinity.gratitude.view.activity.IMAGE_R_ID_KEY
@@ -35,7 +35,7 @@ import android.util.Log
 import com.devlomi.record_view.OnRecordListener
 import com.devlomi.record_view.RecordButton
 import com.orange_infinity.gratitude.TAG
-import com.orange_infinity.gratitude.presenter.IMAGE_MINI
+import com.orange_infinity.gratitude.useCase.IMAGE_MINI
 
 
 const val GALLERY_REQUEST = 1
@@ -75,7 +75,6 @@ class FillRecordFragment : Fragment() {
 
         recordButton = v.findViewById(R.id.imgMicrophone)
         recordButton.setRecordView(v.recordView)
-
 
         v.recordView.setOnRecordListener(object : OnRecordListener {
             override fun onStart() {
