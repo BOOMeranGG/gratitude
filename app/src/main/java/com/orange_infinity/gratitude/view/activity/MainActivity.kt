@@ -33,10 +33,7 @@ class MainActivity : BaseActivity() {
         requestPermission(this)
 
         btnNoticing.setOnClickListener {
-            //val level = RecordCountPreferences.getCountOfRecords(this)
-            //if (level != null && level == 0) {
             if (RecordCountPreferences.getCountOfRecords(this) == 0) {
-                //RecordCountPreferences.saveRecordCount(this, 1)
                 val intent = Intent(this, CitationActivity::class.java)
                 intent.putExtra(IMAGE_R_ID_KEY, R.drawable.level1)
                 intent.putExtra(IS_FIRST_KEY, true)
@@ -88,7 +85,6 @@ class MainActivity : BaseActivity() {
         if (!hasPermissions(context)) {
             ActivityCompat.requestPermissions(
                 context,
-                //arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
                 REQUEST_READ_STORAGE
             )
@@ -100,34 +96,34 @@ class MainActivity : BaseActivity() {
     private fun hasPermissions(context: Context): Boolean {
         return ContextCompat.checkSelfPermission(
             context,
-            //Manifest.permission.READ_EXTERNAL_STORAGE
             Manifest.permission.WRITE_EXTERNAL_STORAGE
         ) == PackageManager.PERMISSION_GRANTED
     }
 
     private fun setEnabling() {
-//        setEnableFalseToAll()
-//        val level = RecordCountPreferences.getCountOfRecords(this)
-//        when (level) {
-//            null, 0, 1 -> {
-//                btnNoticing.isEnabled = true
-//            }
-//            2 -> {
-//                btnReflecting.isEnabled = true
-//            }
-//            else -> {
-//                btnPractice.isEnabled = true
-//            }
-//        }
-//        val isJournalNotEmpty = SystemPreferences.getBoolean(this, IS_JOURNAL_NOT_EMPTY)
-//        btnJournal.isEnabled = isJournalNotEmpty ?: false
+        setEnableToAll(true)
+        val countOfRecords = RecordCountPreferences.getCountOfRecords(this) ?: 0
+        if (countOfRecords == 0) {
+            btnReflecting.isEnabled = false
+            btnPractice.isEnabled = false
+            btnJournal.isEnabled = false
+        } else if (countOfRecords < 3) {
+            btnReflecting.isEnabled = false
+            btnPractice.isEnabled = false
+        } else if (countOfRecords < 6) {
+            btnNoticing.isEnabled = false
+            btnPractice.isEnabled = false
+        } else {
+            btnNoticing.isEnabled = false
+            btnReflecting.isEnabled = false
+        }
     }
 
-    private fun setEnableFalseToAll() {
-        btnNoticing.isEnabled = false
-        btnReflecting.isEnabled = false
-        btnPractice.isEnabled = false
-        btnJournal.isEnabled = false
+    private fun setEnableToAll(isEnable: Boolean) {
+        btnNoticing.isEnabled = isEnable
+        btnReflecting.isEnabled = isEnable
+        btnPractice.isEnabled = isEnable
+        btnJournal.isEnabled = isEnable
     }
 
     @SuppressLint("StaticFieldLeak")
