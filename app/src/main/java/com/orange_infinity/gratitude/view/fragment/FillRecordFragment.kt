@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.devlomi.record_view.OnRecordListener
 import com.devlomi.record_view.RecordButton
+import com.devlomi.record_view.RecordView
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.TAG
 import com.orange_infinity.gratitude.model.database.entities.Record
@@ -48,6 +49,7 @@ class FillRecordFragment : Fragment() {
     private var soundName: String? = null
     private var isRecordAudio = false
     private lateinit var recordButton: RecordButton
+    private lateinit var recordView: RecordView
 
     companion object {
         fun newInstance(activity: Activity, countOfRecords: Int, isTop: Boolean): FillRecordFragment {
@@ -71,7 +73,10 @@ class FillRecordFragment : Fragment() {
         }
 
         recordButton = v.findViewById(R.id.imgMicrophone)
-        recordButton.setRecordView(v.recordView)
+        recordView = v.findViewById(R.id.recordView)
+        recordButton.setRecordView(recordView)
+
+        recordView.cancelBounds = 160f // dp
 
         v.recordView.setOnRecordListener(object : OnRecordListener {
             override fun onStart() {

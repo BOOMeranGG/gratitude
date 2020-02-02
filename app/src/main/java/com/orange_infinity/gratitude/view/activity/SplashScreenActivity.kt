@@ -11,12 +11,34 @@ import com.orange_infinity.gratitude.model.database.entities.Record
 import com.orange_infinity.gratitude.useCase.IMAGE_MINI
 import com.orange_infinity.gratitude.useCase.ImageLoader
 import com.orange_infinity.gratitude.view.activity.interfaces.ImageLoaderOwner
+import java.util.*
+
+private const val MIN_TIME_LOADING_MILLI = 1250
 
 class SplashScreenActivity : AppCompatActivity() {
+
+    private lateinit var timer: Timer
+    private lateinit var timerTask: TimerTask
+    private var timeLoadingMilli = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loadApp()
+
+        timer = Timer()
+        timerTask = LoadingTimerTask()
+        timer.schedule(timerTask, 0, 100)
+    }
+
+    private fun stopTimer() {
+        timer.cancel()
+    }
+
+    private fun goToMenu() {
+        stopTimer()
+        val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -34,10 +56,8 @@ class SplashScreenActivity : AppCompatActivity() {
                 } else {
                     records.size
                 }
-                if (countOfLoadRecords == 0) {
-                    val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                if (countOfLoadRecords == 0 && timeLoadingMilli >= MIN_TIME_LOADING_MILLI) {
+                    goToMenu()
                 }
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -58,11 +78,23 @@ class SplashScreenActivity : AppCompatActivity() {
             override fun onLoadComplete() {
                 currentCount++
                 if (currentCount == countOfLoadRecords) {
-                    val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    if (timeLoadingMilli >= MIN_TIME_LOADING_MILLI) {
+                        goToMenu()
+                    }
                 }
             }
         }.execute()
+    }
+
+    private inner class LoadingTimerTask : TimerTask() {
+
+        override fun run() {
+            timeLoadingMilli += 100
+            if (timeLoadingMilli >= MIN_TIME_LOADING_MILLI) {
+                runOnUiThread {
+                    goToMenu()
+                }
+            }
+        }
     }
 }
