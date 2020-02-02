@@ -17,7 +17,8 @@
 
         <activity
             android:theme="@style/SplashTheme"
-            android:name=".view.activity.SplashScreenActivity">
+            android:name=".view.activity.SplashScreenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -25,13 +26,17 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.ShareActivity">
+        <activity android:name=".view.activity.ShareActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.CitationActivity">
+        <activity android:name=".view.activity.CitationActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.NoticingActivity">
+        <activity android:name=".view.activity.NoticingActivity"
+                  android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.JournalActivity">
+        <activity android:name=".view.activity.JournalActivity"
+                  android:screenOrientation="portrait">
         </activity>
 
         <service
@@ -43,7 +48,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".view.activity.MainActivity">
+        <activity android:name=".view.activity.MainActivity"
+                  android:screenOrientation="portrait">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN"/>-->
 

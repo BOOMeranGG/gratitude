@@ -101,6 +101,7 @@ class FillRecordFragment : Fragment() {
             override fun onFinish(recordTime: Long) {
                 //Stop Recording..
                 //val time = getHumanTimeText(recordTime)
+                val abc = soundName
                 Log.i(TAG, "onFinish")
                 v.editRecord.isEnabled = true
                 //Log.d("RecordTime", time)
@@ -150,7 +151,7 @@ class FillRecordFragment : Fragment() {
     }
 
     override fun onDestroyView() {
-        saveRecord()
+        //saveRecord()saveRecord
         audioRecorder.releaseRecorder()
         super.onDestroyView()
     }
@@ -196,10 +197,9 @@ class FillRecordFragment : Fragment() {
         }
     }
 
-    private fun saveRecord() {
+    fun saveRecord() {
         val text = editRecord.text.toString()
         if (text.isNotEmpty()) {
-            //SystemPreferences.saveBoolean(activity, IS_JOURNAL_NOT_EMPTY, true)
             var imageName = ""
 
             if (recordBitmap != null) {
@@ -209,7 +209,6 @@ class FillRecordFragment : Fragment() {
             }
 
             saveNoticing(text, imageName, soundName)
-            //checkNewLevel()
         } else if (!soundName.isNullOrBlank()) {
             audioRecorder.deleteAudio(soundName!!)
         }
@@ -218,7 +217,7 @@ class FillRecordFragment : Fragment() {
     private fun createFirstLevelText(v: View) {
         if (isTop) {
             v.tvTitle.text = "Did anything good happened to you today?"
-            v.tvDescription.text = "Met a friend for a lunch? Had a moment of calm?\\n Nothing is too big or too small!"
+            v.tvDescription.text = "Met a friend for a lunch? Had a moment of calm?\n Nothing is too big or too small!"
         } else {
             v.tvTitle.text = "What could you be grateful for today?"
             v.tvDescription.text = "Good weather? Cup of coffee? A loved one?"

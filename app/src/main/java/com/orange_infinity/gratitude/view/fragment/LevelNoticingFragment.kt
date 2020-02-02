@@ -13,6 +13,8 @@ class LevelNoticingFragment : Fragment() {
 
     private lateinit var fragmentActivity: FragmentActivity
     private var countOfRecords: Int = 1
+    private var fragmentTop: FillRecordFragment? = null
+    private var fragmentBottom: FillRecordFragment? = null
 
     companion object {
         fun newInstance(activity: FragmentActivity, countOfRecords: Int): LevelNoticingFragment {
@@ -37,29 +39,39 @@ class LevelNoticingFragment : Fragment() {
         createFillingTopFragment()
         createFillingBottomFragment()
 
+        v.btnSave.setOnClickListener {
+            fragmentTop?.saveRecord()
+            fragmentBottom?.saveRecord()
+            activity?.finish()
+        }
+
         return v
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     private fun createFillingTopFragment() {
         val fm = fragmentActivity.supportFragmentManager
-        var fragment = fm.findFragmentById(R.id.fillRecordContainerTop)
+        fragmentTop = fm.findFragmentById(R.id.fillRecordContainerTop) as FillRecordFragment?
 
-        if (fragment == null) {
-            fragment = FillRecordFragment.newInstance(fragmentActivity, countOfRecords, true)
+        if (fragmentTop == null) {
+            fragmentTop = FillRecordFragment.newInstance(fragmentActivity, countOfRecords, true)
             fm.beginTransaction()
-                .add(R.id.fillRecordContainerTop, fragment)
+                .add(R.id.fillRecordContainerTop, fragmentTop!!)
                 .commit()
         }
     }
 
     private fun createFillingBottomFragment() {
         val fm = fragmentActivity.supportFragmentManager
-        var fragment = fm.findFragmentById(R.id.fillRecordContainerBottom)
+        fragmentBottom = fm.findFragmentById(R.id.fillRecordContainerBottom) as FillRecordFragment?
 
-        if (fragment == null) {
-            fragment = FillRecordFragment.newInstance(fragmentActivity, countOfRecords, false)
+        if (fragmentBottom == null) {
+            fragmentBottom = FillRecordFragment.newInstance(fragmentActivity, countOfRecords, false)
             fm.beginTransaction()
-                .add(R.id.fillRecordContainerBottom, fragment)
+                .add(R.id.fillRecordContainerBottom, fragmentBottom!!)
                 .commit()
         }
     }
