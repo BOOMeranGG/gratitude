@@ -48,4 +48,6 @@ dependencies {
 
     implementation 'com.devlomi.record-view:record-view:2.0.1'
     implementation 'com.github.bolaware:momentz:v1.0'
+
+    implementation 'com.r0adkll:slidableactivity:2.1.0'
 }

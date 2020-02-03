@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.orange_infinity.gratitude.R
 import kotlinx.android.synthetic.main.level_noticing_fragment.view.*
+import com.r0adkll.slidr.model.SlidrInterface
 
 class LevelNoticingFragment : Fragment() {
 
@@ -15,6 +16,7 @@ class LevelNoticingFragment : Fragment() {
     private var countOfRecords: Int = 1
     private var fragmentTop: FillRecordFragment? = null
     private var fragmentBottom: FillRecordFragment? = null
+    var slidrInterface: SlidrInterface? = null
 
     companion object {
         fun newInstance(activity: FragmentActivity, countOfRecords: Int): LevelNoticingFragment {

@@ -15,6 +15,7 @@ import com.orange_infinity.gratitude.useCase.AudioController
 import com.orange_infinity.gratitude.useCase.IMAGE_MINI
 import com.orange_infinity.gratitude.useCase.ImageLoader
 import com.orange_infinity.gratitude.view.activity.interfaces.ImageLoaderOwner
+import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.list_record.view.*
 
 class JournalActivity : BaseActivity(), ImageLoaderOwner {
@@ -26,6 +27,7 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_journal)
+        Slidr.attach(this)
 
         init()
         getAllNoticing()

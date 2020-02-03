@@ -7,12 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.orange_infinity.gratitude.R
+import com.r0adkll.slidr.model.SlidrInterface
 import kotlinx.android.synthetic.main.level_noticing_fragment.view.*
 import kotlinx.android.synthetic.main.practicing_gratitude_fragment.*
 import kotlinx.android.synthetic.main.practicing_gratitude_fragment.view.*
 import kotlinx.android.synthetic.main.practicing_gratitude_fragment.view.btnSave
 import java.text.SimpleDateFormat
 import java.util.*
+import com.r0adkll.slidr.model.SlidrPosition
+import com.r0adkll.slidr.model.SlidrConfig
+import com.r0adkll.slidr.Slidr
+
 
 class PracticingGratitudeFragment : Fragment() {
 
@@ -20,6 +25,8 @@ class PracticingGratitudeFragment : Fragment() {
     private var countOfRecords: Int = 1
     private var fragmentTop: FillRecordFragment? = null
     private var fragmentBottom: FillRecordFragment? = null
+    var slidrInterface: SlidrInterface? = null
+    private lateinit var tempView: View
 
     companion object {
         fun newInstance(activity: FragmentActivity, countOfRecords: Int): PracticingGratitudeFragment {
@@ -33,6 +40,7 @@ class PracticingGratitudeFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.practicing_gratitude_fragment, container, false)
+        tempView = v
 
         val formatForDateNow = SimpleDateFormat("MM/dd/yyyy", Locale.US)
         val currentDate = formatForDateNow.format(Date())
@@ -49,6 +57,16 @@ class PracticingGratitudeFragment : Fragment() {
 
         return v
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//        if (slidrInterface == null)
+//            slidrInterface = Slidr.replace(
+//                tempView.findViewById(R.id.contentContainer),
+//                SlidrConfig.Builder().position(SlidrPosition.LEFT).build()
+//            )
+//        println(2)
+//    }
 
 
     private fun createFillingTopFragment() {

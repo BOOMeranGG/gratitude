@@ -14,6 +14,8 @@ import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.preferences.EntryDateRegister
 import com.orange_infinity.gratitude.model.preferences.RecordCountPreferences
+import com.orange_infinity.gratitude.view.fragment.LevelNoticingFragment
+import com.orange_infinity.gratitude.view.fragment.PracticingGratitudeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 private const val REQUEST_READ_STORAGE = 113
@@ -24,9 +26,7 @@ class MainActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val lastDate = EntryDateRegister.getLastEntryDate(this)
         EntryDateRegister.saveEntryDate(this)
-
         btnReflecting.isEnabled = false
         btnPractice.isEnabled = false
 

@@ -11,6 +11,7 @@ import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.useCase.RecordEntityManager
 import com.orange_infinity.gratitude.view.fragment.LevelNoticingFragment
 import com.orange_infinity.gratitude.view.fragment.PracticingGratitudeFragment
+import com.r0adkll.slidr.Slidr
 
 const val COUNT_OF_RECORDS_KEY = "countOfRecordsKey"
 
@@ -21,8 +22,9 @@ class NoticingActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_noticing)
+        Slidr.attach(this)
 
-        // Получаем количество сделанных записей через
+        // Получаем количество сделанных записей через // TODO("Delete, cause it useless")
         countOfRecords = intent?.extras?.getInt(COUNT_OF_RECORDS_KEY) ?: 0
         Log.i(com.orange_infinity.gratitude.TAG, "Count of all records: $countOfRecords")
 
