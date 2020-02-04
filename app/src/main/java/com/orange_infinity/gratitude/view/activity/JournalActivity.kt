@@ -81,9 +81,61 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
         RecyclerView.ViewHolder(recordView), View.OnClickListener {
 
         fun bindRecord(record: Record, position: Int, countOfRecords: Int) {
-            recordView.tvDate.text = record.date
-            recordView.tvDescription.text = "${record.description}\n${record.descriptionSecond}"
+            setUpTexts(record)
+            setUpHeaderAndFooter(position, countOfRecords)
+            setUpImages(record)
+            setUpSounds(record)
+            setViewGoneToNonExistentPart(record)
 
+            recordView.listRecordLayout.setOnClickListener(this)
+        }
+
+        private fun setViewGoneToNonExistentPart(record: Record) {
+            if (record.description.isEmpty()) {
+                recordView.imgRecord.visibility = View.GONE
+                recordView.imgSound.visibility = View.GONE
+            } else if (record.descriptionSecond.isEmpty()) {
+                recordView.imgRecordSecond.visibility = View.GONE
+                recordView.imgSoundSecond.visibility = View.GONE
+            }
+        }
+
+        private fun setUpTexts(record: Record) {
+            recordView.tvDate.text = record.date
+            recordView.tvDescription.text = record.description
+            recordView.tvDescriptionSecond.text = record.descriptionSecond
+
+            if (record.description.isEmpty() || record.descriptionSecond.isEmpty()) {
+                recordView.separatorDescription.visibility = View.GONE
+            }
+        }
+
+        private fun setUpSounds(record: Record) {
+            if (!record.soundName.isNullOrBlank() && audioController.isAudioExist(record.soundName!!)) {
+                recordView.imgSound.setImageResource(R.drawable.ic_sound)
+                recordView.imgSound.setOnClickListener {
+                    audioController.startPlay(record.soundName!!)
+                }
+            }
+            if (!record.soundNameSecond.isNullOrBlank() && audioController.isAudioExist(record.soundNameSecond!!)) {
+                recordView.imgSoundSecond.setImageResource(R.drawable.ic_sound)
+                recordView.imgSoundSecond.setOnClickListener {
+                    audioController.startPlay(record.soundNameSecond!!)
+                }
+            }
+        }
+
+        private fun setUpImages(record: Record) {
+            if (!record.imageName.isNullOrBlank()) {
+                ImageLoader(record.imageName!! + IMAGE_MINI, this@JournalActivity).execute(recordView.imgRecord)
+            }
+            if (!record.imageNameSecond.isNullOrBlank()) {
+                ImageLoader(record.imageNameSecond!! + IMAGE_MINI, this@JournalActivity)
+                    .execute(recordView.imgRecordSecond)
+            }
+        }
+
+        private fun setUpHeaderAndFooter(position: Int, countOfRecords: Int) {
             if (position == 0) {
                 recordView.layoutTitle.visibility = View.VISIBLE
             }
@@ -91,18 +143,6 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
                 recordView.line1.visibility = View.GONE
                 recordView.line2.visibility = View.GONE
             }
-
-            if (!record.imageName.isNullOrBlank()) {
-                ImageLoader(record.imageName!! + IMAGE_MINI, this@JournalActivity).execute(recordView.imgRecord)
-            }
-            if (!record.soundName.isNullOrBlank() && audioController.isAudioExist(record.soundName!!)) {
-                recordView.imgSound.setImageResource(R.drawable.ic_sound)
-                recordView.imgSound.setOnClickListener {
-                    audioController.startPlay(record.soundName!!)
-                }
-            }
-
-            recordView.listRecordLayout.setOnClickListener(this)
         }
 
         override fun onClick(v: View) {
