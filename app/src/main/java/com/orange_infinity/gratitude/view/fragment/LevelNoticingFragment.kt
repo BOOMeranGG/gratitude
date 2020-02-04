@@ -1,14 +1,20 @@
 package com.orange_infinity.gratitude.view.fragment
 
+import android.graphics.Point
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.orange_infinity.gratitude.R
 import kotlinx.android.synthetic.main.level_noticing_fragment.view.*
 import com.r0adkll.slidr.model.SlidrInterface
+import kotlinx.android.synthetic.main.level_noticing_fragment.*
+import kotlinx.android.synthetic.main.level_noticing_fragment.view.btnSave
+import kotlinx.android.synthetic.main.practicing_gratitude_fragment.view.*
 
 class LevelNoticingFragment : Fragment() {
 
@@ -38,6 +44,16 @@ class LevelNoticingFragment : Fragment() {
             name = "Reflecting"
         }
         v.tvLevelNoticing.text = "Level ${countOfRecords / 3 + 1}: $name"
+
+        val display = activity?.windowManager?.defaultDisplay
+        val size = Point()
+        display?.getSize(size)
+        val height = size.y
+        val mainLayout = v.findViewById<LinearLayout>(R.id.layoutMain)
+        mainLayout.layoutParams.height =
+            height - v.layoutTop.height - pxFromDp(mainLayout.marginTop.toFloat()).toInt() -
+                    pxFromDp(v.layoutTop.marginTop.toFloat()).toInt() - getStatusBarHeight()
+
         createFillingTopFragment()
         createFillingBottomFragment()
 
@@ -50,8 +66,11 @@ class LevelNoticingFragment : Fragment() {
         return v
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    private fun getStatusBarHeight(): Int {
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        return if (resourceId > 0) {
+            resources.getDimensionPixelSize(resourceId)
+        } else 0
     }
 
     private fun createFillingTopFragment() {
@@ -76,5 +95,13 @@ class LevelNoticingFragment : Fragment() {
                 .add(R.id.fillRecordContainerBottom, fragmentBottom!!)
                 .commit()
         }
+    }
+
+    private fun dpFromPx(px: Float): Float {
+        return px / activity?.applicationContext?.resources?.displayMetrics?.density!!
+    }
+
+    private fun pxFromDp(dp: Float): Float {
+        return dp * activity?.applicationContext?.resources?.displayMetrics?.density!!
     }
 }

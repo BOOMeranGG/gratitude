@@ -25,7 +25,6 @@ class PracticingGratitudeFragment : Fragment(), KeyboardVisibilityEventListener 
     private var fragmentTop: FillRecordFragment? = null
     private var fragmentBottom: FillRecordFragment? = null
     var slidrInterface: SlidrInterface? = null
-    private lateinit var layoutRoot: ScrollView
 
     companion object {
         fun newInstance(activity: FragmentActivity, countOfRecords: Int): PracticingGratitudeFragment {
@@ -39,7 +38,6 @@ class PracticingGratitudeFragment : Fragment(), KeyboardVisibilityEventListener 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.practicing_gratitude_fragment, container, false)
-        layoutRoot = v.findViewById(R.id.layoutRoot)
 
         val formatForDateNow = SimpleDateFormat("MM/dd/yyyy", Locale.US)
         val currentDate = formatForDateNow.format(Date())

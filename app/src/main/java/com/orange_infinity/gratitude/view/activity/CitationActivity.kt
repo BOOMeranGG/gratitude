@@ -3,6 +3,7 @@ package com.orange_infinity.gratitude.view.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import com.bolaware.viewstimerstory.Momentz
 import com.bolaware.viewstimerstory.MomentzCallback
@@ -12,7 +13,7 @@ import kotlinx.android.synthetic.main.activity_citation.*
 
 const val IMAGE_R_ID_KEY = "imageRIdKey"
 const val IS_FIRST_KEY = "isFirst"
-const val SHOW_SECOND = 6
+const val SHOW_SECOND = 9
 
 class CitationActivity : BaseActivity(), MomentzCallback {
 
@@ -21,15 +22,12 @@ class CitationActivity : BaseActivity(), MomentzCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_citation)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
         val imageRId = intent?.extras?.getInt(IMAGE_R_ID_KEY)
-//        if (imageRId != null) {
-//            imgMain.setImageResource(imageRId)
-//        }
-
-//        imgMain.setOnClickListener {
-//            finish()
-//        }
 
         val isFirst = intent?.extras?.getBoolean(IS_FIRST_KEY)
         if (isFirst != null && isFirst) {
@@ -38,8 +36,9 @@ class CitationActivity : BaseActivity(), MomentzCallback {
 
         val storyImage = ImageView(this)
         storyImage.setImageResource(imageRId!!)
+        storyImage.scaleType = ImageView.ScaleType.CENTER_CROP
         val listOfViews = listOf(MomentzView(storyImage, SHOW_SECOND))
-        Momentz(this, listOfViews, layoutCitation, this).start()
+        Momentz(this, listOfViews, layoutRoot, this).start()
     }
 
     override fun done() {
