@@ -11,6 +11,8 @@ import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.orange_infinity.gratitude.R
+import com.orange_infinity.gratitude.model.database.entities.Record
+import com.orange_infinity.gratitude.useCase.RecordEntityManager
 import com.r0adkll.slidr.model.SlidrInterface
 import kotlinx.android.synthetic.main.practicing_gratitude_fragment.view.*
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent
@@ -56,8 +58,20 @@ class PracticingGratitudeFragment : Fragment(), KeyboardVisibilityEventListener 
         createFillingBottomFragment()
 
         v.btnSave.setOnClickListener {
-            fragmentTop?.saveRecord()
-            fragmentBottom?.saveRecord()
+            val record1 = fragmentTop?.saveRecord()
+            val record2 = fragmentBottom?.saveRecord()
+
+            // TODO("Повтор, вынести в отдельный метод")
+            if (record1 == null && record2 == null) {
+                return@setOnClickListener
+            }
+            val saveRecord: Record = record1 ?: Record()
+            saveRecord.date = record1?.date ?: record2?.date
+            saveRecord.descriptionSecond = record2?.description ?: ""
+            saveRecord.imageNameSecond = record2?.imageName
+            saveRecord.soundNameSecond = record2?.soundName
+            RecordEntityManager().save(activity!!, saveRecord)
+
             activity?.finish()
         }
         KeyboardVisibilityEvent.setEventListener(activity, this)

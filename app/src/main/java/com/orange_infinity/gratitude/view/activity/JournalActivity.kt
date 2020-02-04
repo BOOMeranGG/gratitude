@@ -82,7 +82,7 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
 
         fun bindRecord(record: Record, position: Int, countOfRecords: Int) {
             recordView.tvDate.text = record.date
-            recordView.tvDescription.text = record.description
+            recordView.tvDescription.text = "${record.description}\n${record.descriptionSecond}"
 
             if (position == 0) {
                 recordView.layoutTitle.visibility = View.VISIBLE

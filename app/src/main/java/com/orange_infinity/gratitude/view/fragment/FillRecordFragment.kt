@@ -26,7 +26,7 @@ import com.orange_infinity.gratitude.model.database.entities.Record
 import com.orange_infinity.gratitude.saveImageToGallery
 import com.orange_infinity.gratitude.useCase.AudioController
 import com.orange_infinity.gratitude.useCase.IMAGE_MINI
-import com.orange_infinity.gratitude.useCase.RecordEntityManager
+import com.orange_infinity.gratitude.useCase.RecordEntityService
 import kotlinx.android.synthetic.main.fiil_record_fragment.*
 import kotlinx.android.synthetic.main.fiil_record_fragment.view.*
 import java.io.IOException
@@ -40,7 +40,7 @@ const val REQUEST_RECORD_AUDIO = 2
 class FillRecordFragment : Fragment() {
 
     private lateinit var activity: Activity
-    private lateinit var recordEntityManager: RecordEntityManager
+    private lateinit var recordEntityService: RecordEntityService
     private val audioRecorder = AudioController()
     private var countOfRecords: Int = 1
     private var isTop = true
@@ -57,7 +57,7 @@ class FillRecordFragment : Fragment() {
             instance.activity = activity
             instance.countOfRecords = countOfRecords
             instance.isTop = isTop
-            instance.recordEntityManager = RecordEntityManager(activity)
+            instance.recordEntityService = RecordEntityService(activity)
 
             return instance
         }
@@ -197,21 +197,35 @@ class FillRecordFragment : Fragment() {
         }
     }
 
-    fun saveRecord() {
-        val text = editRecord.text.toString()
-        if (text.isNotEmpty()) {
+    fun saveRecord(): Record? {
+        val description = editRecord.text.toString()
+        if (description.isNotEmpty()) {
             var imageName = ""
 
             if (recordBitmap != null) {
                 imageName = UUID.randomUUID().toString()
-                saveImageToGallery(recordBitmap!!, imageName)
-                saveImageToGallery(scaledBitmap!!, imageName + IMAGE_MINI)
+
+                Thread {
+                    saveImageToGallery(recordBitmap!!, imageName)
+                    saveImageToGallery(scaledBitmap!!, imageName + IMAGE_MINI)
+                }.start()
             }
 
-            saveNoticing(text, imageName, soundName)
+            val record = Record()
+            val formatForDateNow = SimpleDateFormat("MM/dd/yyyy", Locale.US)
+            val currentDate = formatForDateNow.format(Date())
+            record.date = currentDate
+            record.description = description
+            record.imageName = imageName
+            record.soundName = soundName
+
+            return record
+            //saveNoticing(text, imageName, soundName)
         } else if (!soundName.isNullOrBlank()) {
             audioRecorder.deleteAudio(soundName!!)
         }
+
+        return null
     }
 
     private fun createFirstLevelText(v: View) {
@@ -250,31 +264,6 @@ class FillRecordFragment : Fragment() {
         }
     }
 
-    private fun checkNewLevel() {
-//        countOfRecords++
-//        if (countOfRecords % 3 == 0) {
-//            startNewLevelWithCitation(countOfRecords / 3)
-//        }
-    }
-
-    private fun startNewLevelWithCitation(level: Int) {
-//        if (level == 1) { // set up level 2
-//            RecordCountPreferences.saveRecordCount(activity, 2)
-//            val intent = Intent(activity, CitationActivity::class.java)
-//            intent.putExtra(IMAGE_R_ID_KEY, R.drawable.end_one)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-//            startActivity(intent)
-//        } else if (level == 2) { // set up level 3 (free)
-//            RecordCountPreferences.saveRecordCount(activity, 3)
-//            val intent = Intent(activity, CitationActivity::class.java)
-//            intent.putExtra(IMAGE_R_ID_KEY, R.drawable.level3)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-//            startActivity(intent)
-//        } else {    // set up??
-//            RecordCountPreferences.saveRecordCount(activity, 4)
-//        }
-    }
-
     @SuppressLint("StaticFieldLeak")
     private fun saveNoticing(description: String, imageName: String, soundName: String?) {
         object : AsyncTask<Unit, Unit, Unit>() {
@@ -289,7 +278,7 @@ class FillRecordFragment : Fragment() {
                 record.soundName = soundName
 
                 //AppDatabase.getInstance(activity).getRecordDao().insert(record)
-                recordEntityManager.saveRecord(record)
+                recordEntityService.saveRecord(record)
             }
 
         }.execute()

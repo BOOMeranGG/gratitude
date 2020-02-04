@@ -12,4 +12,8 @@ class Record {
     var description: String = ""
     var imageName: String? = null
     var soundName: String? = null
+
+    var descriptionSecond: String = ""
+    var imageNameSecond: String? = null
+    var soundNameSecond: String? = null
 }
