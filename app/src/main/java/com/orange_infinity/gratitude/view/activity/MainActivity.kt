@@ -136,7 +136,6 @@ class MainActivity : BaseActivity() {
 
             override fun onPostExecute(result: Int) {
                 val intent = Intent(this@MainActivity, NoticingActivity::class.java)
-                intent.putExtra(COUNT_OF_RECORDS_KEY, result)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
             }

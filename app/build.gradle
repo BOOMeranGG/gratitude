@@ -50,4 +50,5 @@ dependencies {
     implementation 'com.github.bolaware:momentz:v1.0'
 
     implementation 'com.r0adkll:slidableactivity:2.1.0'
+    implementation 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:2.1.0'
 }

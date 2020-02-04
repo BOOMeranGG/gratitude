@@ -1,32 +1,22 @@
 package com.orange_infinity.gratitude.view.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
-import com.orange_infinity.gratitude.useCase.RecordEntityManager
 import com.orange_infinity.gratitude.view.fragment.LevelNoticingFragment
 import com.orange_infinity.gratitude.view.fragment.PracticingGratitudeFragment
 import com.r0adkll.slidr.Slidr
 
-const val COUNT_OF_RECORDS_KEY = "countOfRecordsKey"
+class NoticingActivity : AppCompatActivity() {
 
-class NoticingActivity : BaseActivity() {
-
-    private var countOfRecords = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_noticing)
         Slidr.attach(this)
-
-        // Получаем количество сделанных записей через // TODO("Delete, cause it useless")
-        countOfRecords = intent?.extras?.getInt(COUNT_OF_RECORDS_KEY) ?: 0
-        Log.i(com.orange_infinity.gratitude.TAG, "Count of all records: $countOfRecords")
 
         goToFillingRecords()
     }
@@ -44,11 +34,10 @@ class NoticingActivity : BaseActivity() {
                 var fragment = fm.findFragmentById(R.id.layoutNoticingContainer)
 
                 if (fragment == null) {
-                    if (countOfRecords < 6) {
-                        //fragment = LevelNoticingFragment.newInstance(this@NoticingActivity)
-                        fragment = createLevelNoticing(countOfRecords)
+                    fragment = if (countOfRecords < 6) {
+                        createLevelNoticing(countOfRecords)
                     } else {
-                        fragment = createFreeNoticing(countOfRecords)
+                        createFreeNoticing(countOfRecords)
                     }
                     fm.beginTransaction()
                         .add(R.id.layoutNoticingContainer, fragment)

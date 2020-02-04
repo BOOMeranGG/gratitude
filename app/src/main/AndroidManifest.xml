@@ -33,6 +33,7 @@
                   android:screenOrientation="portrait">
         </activity>
         <activity android:name=".view.activity.NoticingActivity"
+                  android:windowSoftInputMode="adjustResize"
                   android:screenOrientation="portrait">
         </activity>
         <activity android:name=".view.activity.JournalActivity"
