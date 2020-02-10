@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -14,30 +16,34 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity android:name=".view.activity.ImageViewerActivity">
+        </activity>
         <activity
-            android:theme="@style/SplashTheme"
             android:name=".view.activity.SplashScreenActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
-        <activity android:name=".view.activity.ShareActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.ShareActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.CitationActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.CitationActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.NoticingActivity"
-                  android:windowSoftInputMode="adjustResize"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.NoticingActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize">
         </activity>
-        <activity android:name=".view.activity.JournalActivity"
-                  android:screenOrientation="portrait">
+        <activity
+            android:name=".view.activity.JournalActivity"
+            android:screenOrientation="portrait">
         </activity>
 
         <service
@@ -49,13 +55,16 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".view.activity.MainActivity"
-                  android:screenOrientation="portrait">
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
+        <activity
+            android:name=".view.activity.MainActivity"
+            android:screenOrientation="portrait">
 
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
         </activity>
     </application>
 

@@ -10,7 +10,7 @@ android {
         applicationId "com.orange_infinity.gratitude"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 2
+        versionCode 4
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }

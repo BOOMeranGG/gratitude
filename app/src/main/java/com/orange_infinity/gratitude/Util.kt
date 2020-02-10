@@ -79,7 +79,7 @@ fun saveImageToGallery(bmp: Bitmap, fileName: String) {
 
 }
 
-private fun getGalleryPath(): String {
+fun getGalleryPath(): String {
     //return "${Environment.getExternalStorageDirectory()}/${Environment.DIRECTORY_DCIM}/"
     return "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath}/"
 }

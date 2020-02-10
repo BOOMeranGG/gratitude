@@ -1,11 +1,13 @@
 package com.orange_infinity.gratitude.view.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.orange_infinity.gratitude.R
@@ -18,11 +20,13 @@ import com.orange_infinity.gratitude.view.activity.interfaces.ImageLoaderOwner
 import com.r0adkll.slidr.Slidr
 import kotlinx.android.synthetic.main.list_record.view.*
 
+
 class JournalActivity : BaseActivity(), ImageLoaderOwner {
 
     private lateinit var recordRecycler: RecyclerView
     private var records = mutableListOf<Record>()
     private val audioController = AudioController()
+    private lateinit var layoutRoot: ConstraintLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +62,8 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
         recordRecycler = findViewById(R.id.recyclerRecords)
         recordRecycler.layoutManager = GridLayoutManager(this, 1)
         recordRecycler.adapter = RecordAdapter(records)
+
+        layoutRoot = findViewById(R.id.layoutRoot)
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -128,10 +134,16 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
         private fun setUpImages(record: Record) {
             if (!record.imageName.isNullOrBlank()) {
                 ImageLoader(record.imageName!! + IMAGE_MINI, this@JournalActivity).execute(recordView.imgRecord)
+                recordView.imgRecord.setOnClickListener {
+                    showImage(record.imageName!!)
+                }
             }
             if (!record.imageNameSecond.isNullOrBlank()) {
                 ImageLoader(record.imageNameSecond!! + IMAGE_MINI, this@JournalActivity)
                     .execute(recordView.imgRecordSecond)
+                recordView.imgRecordSecond.setOnClickListener {
+                    showImage(record.imageNameSecond!!)
+                }
             }
         }
 
@@ -143,6 +155,13 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
                 recordView.line1.visibility = View.GONE
                 recordView.line2.visibility = View.GONE
             }
+        }
+
+        private fun showImage(imageName: String) {
+            val intent = Intent(this@JournalActivity, ImageViewerActivity::class.java)
+            intent.putExtra(IMAGE_NAME_KEY, imageName)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+            startActivity(intent)
         }
 
         override fun onClick(v: View) {

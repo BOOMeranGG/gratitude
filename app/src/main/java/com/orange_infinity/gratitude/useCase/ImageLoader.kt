@@ -28,7 +28,11 @@ class ImageLoader(
         if (bitmap != null) {
             val width = bitmap!!.width
             val height = bitmap!!.height
-            val divider = (width / 90).coerceAtMost(height / 90)
+            val divider = if (fileName.contains("IMAGE_MINI")) {
+                (width / 90).coerceAtMost(height / 90)
+            } else {
+                1
+            }
 
             val scaledBitmap = Bitmap.createScaledBitmap(bitmap, width / divider, height / divider, false)
             RecordImagesCache.imageCache.put(fileName, scaledBitmap)
