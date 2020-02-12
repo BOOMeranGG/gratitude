@@ -1,12 +1,11 @@
 package com.orange_infinity.gratitude.view.activity
 
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.util.Base64
 import android.util.Log
-import com.facebook.share.model.ShareLinkContent
 import com.orange_infinity.gratitude.R
+import com.orange_infinity.gratitude.model.FacebookContent
 import kotlinx.android.synthetic.main.activity_share.*
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
@@ -17,12 +16,7 @@ class ShareActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share)
 
-        val content = ShareLinkContent.Builder()
-            .setContentUrl(Uri.parse("https://play.google.com/store/apps/details?id=com.orange_infinity.gratitude"))
-            .setQuote("Test text")
-            .build()
-
-        btnShare.shareContent = content
+        btnShare.shareContent = FacebookContent.CONTENT
     }
 
     fun printHashKey() {
