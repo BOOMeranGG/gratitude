@@ -40,8 +40,6 @@ class ImageViewerActivity : BaseActivity(), ImageLoaderOwner {
             val height = size.y
             val imageLoader = ImageLoader(imageName, this)
             val layoutMain = findViewById<ConstraintLayout>(R.id.layoutMain)
-            imageLoader.widthCompress = width
-            imageLoader.heightCompress = width
             imageLoader.execute(imgMain)
 
             isLoadFullImage = true

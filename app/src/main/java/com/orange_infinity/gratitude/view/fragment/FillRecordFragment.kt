@@ -103,6 +103,7 @@ class FillRecordFragment : Fragment() {
                 Log.i(TAG, "onCancel")
                 audioRecorder.deleteAudio(soundName ?: return)
                 soundName = null
+                audioRecorder.recordStop()
                 v.editRecord.isEnabled = true
             }
 
@@ -110,6 +111,7 @@ class FillRecordFragment : Fragment() {
                 //Stop Recording..
                 //val time = getHumanTimeText(recordTime)
                 val abc = soundName
+                audioRecorder.recordStop()
                 Log.i(TAG, "onFinish")
                 v.editRecord.isEnabled = true
                 //Log.d("RecordTime", time)
@@ -120,6 +122,7 @@ class FillRecordFragment : Fragment() {
                 Log.i(TAG, "onLessThanSecond")
                 audioRecorder.deleteAudio(soundName ?: return)
                 soundName = null
+                audioRecorder.recordStop()
                 v.editRecord.isEnabled = true
             }
         })
@@ -195,14 +198,14 @@ class FillRecordFragment : Fragment() {
     }
 
     private fun recordSound() {
-        if (!isRecordAudio) {
+//        if (!isRecordAudio) {
             soundName = UUID.randomUUID().toString()
             audioRecorder.recordStart(soundName!!)
             isRecordAudio = true
-        } else {
-            audioRecorder.recordStop()
-            isRecordAudio = false
-        }
+//        } else {
+//            audioRecorder.recordStop()
+//            isRecordAudio = false
+//        }
     }
 
     fun saveRecord(): Record? {
