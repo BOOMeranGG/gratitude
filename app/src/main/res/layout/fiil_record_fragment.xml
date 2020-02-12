@@ -83,6 +83,20 @@
             android:layout_marginTop="4dp"
             android:layout_marginEnd="4dp"/>
 
+        <com.devlomi.record_view.RecordView
+            android:id="@+id/recordView"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            app:layout_constraintBottom_toBottomOf="@id/imgMicrophone"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginEnd="8dp"
+            app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
+            app:slide_to_cancel_arrow_color="#000000"
+            app:slide_to_cancel_bounds="8dp"
+            app:slide_to_cancel_margin_right="10dp"
+            app:slide_to_cancel_text="Slide To Cancel"
+            app:counter_time_color="#ff0000"/>
+
         <com.devlomi.record_view.RecordButton
             android:id="@+id/imgMicrophone"
             android:layout_width="50dp"
@@ -91,22 +105,18 @@
             app:layout_constraintEnd_toStartOf="@id/imgPaint"
             android:background="@drawable/recv_bg_mic"
             android:scaleType="centerInside"
-            app:mic_icon="@drawable/recv_ic_mic_white" />
+            app:mic_icon="@drawable/recv_ic_mic_white"/>
 
-        <com.devlomi.record_view.RecordView
-            android:id="@+id/recordView"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            app:layout_constraintBottom_toBottomOf="@id/imgMicrophone"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/imgMicrophone"
-            android:layout_marginEnd="8dp"
-            app:slide_to_cancel_arrow="@drawable/recv_ic_arrow"
-            app:slide_to_cancel_arrow_color="#000000"
-            app:slide_to_cancel_bounds="8dp"
-            app:slide_to_cancel_margin_right="10dp"
-            app:slide_to_cancel_text="Slide To Cancel"
-            app:counter_time_color="#ff0000"/>
+        <!--<br.com.safety.audio_recorder.AudioRecordButton-->
+        <!--android:id="@+id/btnAudioRecord"-->
+        <!--android:layout_width="80dp"-->
+        <!--android:layout_height="80dp"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--app:layout_constraintTop_toTopOf="parent"-->
+        <!--app:layout_constraintEnd_toStartOf="@id/imgPaint">-->
+
+
+        <!--</br.com.safety.audio_recorder.AudioRecordButton>-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

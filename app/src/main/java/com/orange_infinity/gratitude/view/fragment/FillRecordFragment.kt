@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
@@ -17,9 +18,10 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.devlomi.record_view.OnRecordListener
-import com.devlomi.record_view.RecordButton
-import com.devlomi.record_view.RecordView
+//import com.devlomi.record_view.OnRecordClickListener
+//import com.devlomi.record_view.OnRecordListener
+//import com.devlomi.record_view.RecordButton
+//import com.devlomi.record_view.RecordView
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.TAG
 import com.orange_infinity.gratitude.model.database.entities.Record
@@ -32,6 +34,10 @@ import kotlinx.android.synthetic.main.fiil_record_fragment.view.*
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import android.widget.Toast
+import com.devlomi.record_view.OnRecordListener
+import com.devlomi.record_view.RecordButton
+import com.devlomi.record_view.RecordView
 
 
 const val GALLERY_REQUEST = 1
@@ -74,11 +80,13 @@ class FillRecordFragment : Fragment() {
 
         recordButton = v.findViewById(R.id.imgMicrophone)
         recordView = v.findViewById(R.id.recordView)
+        recordView.cancelBounds = 1f // dp
+        recordView.setSlideToCancelTextColor(Color.parseColor("#64ffffff"))
         recordButton.setRecordView(recordView)
 
-        recordView.cancelBounds = 160f // dp
 
-        v.recordView.setOnRecordListener(object : OnRecordListener {
+//        recordView.setSlideToCancelText("")
+        recordView.setOnRecordListener(object : OnRecordListener {
             override fun onStart() {
                 //Start Recording..
                 if (!hasPermissions(activity)) {
@@ -95,6 +103,7 @@ class FillRecordFragment : Fragment() {
                 Log.i(TAG, "onCancel")
                 audioRecorder.deleteAudio(soundName ?: return)
                 soundName = null
+                audioRecorder.recordStop()
                 v.editRecord.isEnabled = true
             }
 
@@ -102,6 +111,7 @@ class FillRecordFragment : Fragment() {
                 //Stop Recording..
                 //val time = getHumanTimeText(recordTime)
                 val abc = soundName
+                audioRecorder.recordStop()
                 Log.i(TAG, "onFinish")
                 v.editRecord.isEnabled = true
                 //Log.d("RecordTime", time)
@@ -112,6 +122,7 @@ class FillRecordFragment : Fragment() {
                 Log.i(TAG, "onLessThanSecond")
                 audioRecorder.deleteAudio(soundName ?: return)
                 soundName = null
+                audioRecorder.recordStop()
                 v.editRecord.isEnabled = true
             }
         })
@@ -187,14 +198,14 @@ class FillRecordFragment : Fragment() {
     }
 
     private fun recordSound() {
-        if (!isRecordAudio) {
+//        if (!isRecordAudio) {
             soundName = UUID.randomUUID().toString()
             audioRecorder.recordStart(soundName!!)
             isRecordAudio = true
-        } else {
-            audioRecorder.recordStop()
-            isRecordAudio = false
-        }
+//        } else {
+//            audioRecorder.recordStop()
+//            isRecordAudio = false
+//        }
     }
 
     fun saveRecord(): Record? {
@@ -243,7 +254,8 @@ class FillRecordFragment : Fragment() {
     private fun createSecondLevelText(v: View) {
         if (isTop) {
             v.tvTitle.text = "What would you be missing from your life?"
-            v.tvDescription.text = "Are there things that you usually don't appreciate? It can be anything from the running water to your partner."
+            v.tvDescription.text =
+                "Are there things that you usually don't appreciate? It can be anything from the running water to your partner."
         } else {
             v.tvTitle.text = "What could you be grateful for today?"
             v.tvDescription.text = "Good weather? Cup of coffee? A loved one?"
@@ -262,25 +274,5 @@ class FillRecordFragment : Fragment() {
             //v.imgMicrophone.setImageResource(R.drawable.microphone)
             v.imgPaint.setImageResource(R.drawable.paint)
         }
-    }
-
-    @SuppressLint("StaticFieldLeak")
-    private fun saveNoticing(description: String, imageName: String, soundName: String?) {
-        object : AsyncTask<Unit, Unit, Unit>() {
-
-            override fun doInBackground(vararg params: Unit) {
-                val record = Record()
-                val formatForDateNow = SimpleDateFormat("MM/dd/yyyy", Locale.US)
-                val currentDate = formatForDateNow.format(Date())
-                record.date = currentDate
-                record.description = description
-                record.imageName = imageName
-                record.soundName = soundName
-
-                //AppDatabase.getInstance(activity).getRecordDao().insert(record)
-                recordEntityService.saveRecord(record)
-            }
-
-        }.execute()
     }
 }

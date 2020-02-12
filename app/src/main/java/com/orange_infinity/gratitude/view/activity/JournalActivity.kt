@@ -135,14 +135,14 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
             if (!record.imageName.isNullOrBlank()) {
                 ImageLoader(record.imageName!! + IMAGE_MINI, this@JournalActivity).execute(recordView.imgRecord)
                 recordView.imgRecord.setOnClickListener {
-                    showImage(record.imageName!!)
+                    //showImage(record.imageName!!)
                 }
             }
             if (!record.imageNameSecond.isNullOrBlank()) {
                 ImageLoader(record.imageNameSecond!! + IMAGE_MINI, this@JournalActivity)
                     .execute(recordView.imgRecordSecond)
                 recordView.imgRecordSecond.setOnClickListener {
-                    showImage(record.imageNameSecond!!)
+                    //showImage(record.imageNameSecond!!)
                 }
             }
         }
@@ -158,10 +158,10 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
         }
 
         private fun showImage(imageName: String) {
-            val intent = Intent(this@JournalActivity, ImageViewerActivity::class.java)
-            intent.putExtra(IMAGE_NAME_KEY, imageName)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(intent)
+//            val intent = Intent(this@JournalActivity, ImageViewerActivity::class.java)
+//            intent.putExtra(IMAGE_NAME_KEY, imageName)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
+//            startActivity(intent)
         }
 
         override fun onClick(v: View) {

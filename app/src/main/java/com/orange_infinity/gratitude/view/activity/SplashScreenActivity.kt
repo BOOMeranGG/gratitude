@@ -6,6 +6,7 @@ import android.os.AsyncTask
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.orange_infinity.gratitude.model.FacebookContent
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
 import com.orange_infinity.gratitude.useCase.IMAGE_MINI
@@ -50,6 +51,7 @@ class SplashScreenActivity : AppCompatActivity() {
             private var currentCount = 0
 
             override fun doInBackground(vararg params: Unit?) {
+                FacebookContent()
                 val records = AppDatabase.getInstance(applicationContext).getRecordDao().findAllWithLimit()
                 countOfLoadRecords = if (records.size > countOfMaxLoadRecords) {
                     countOfMaxLoadRecords
