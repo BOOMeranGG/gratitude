@@ -13,6 +13,9 @@ import java.io.BufferedOutputStream
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import android.util.DisplayMetrics
+
+
 
 const val TAG = "MAIN_TAG"
 const val MAIN_FOLDER = "gratitude"
@@ -82,4 +85,8 @@ fun saveImageToGallery(bmp: Bitmap, fileName: String) {
 fun getGalleryPath(): String {
     //return "${Environment.getExternalStorageDirectory()}/${Environment.DIRECTORY_DCIM}/"
     return "${Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).absolutePath}/"
+}
+
+fun convertDpToPixel(context: Context, dp: Int): Int {
+    return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT).toInt()
 }

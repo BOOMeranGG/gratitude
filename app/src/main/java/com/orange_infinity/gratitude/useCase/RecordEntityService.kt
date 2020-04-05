@@ -13,11 +13,13 @@ class RecordEntityService(private val activity: Activity) {
 
     private val recordDao = AppDatabase.getInstance(activity).getRecordDao()
 
-    fun saveRecord(record: Record) {
+    fun saveRecord(record: Record, isUpdate: Boolean = false) {
         recordDao.insert(record)
-        val countOfRecords = getCurrentCountOfRecords() + 1
-        RecordCountPreferences.saveRecordCount(activity, countOfRecords)
-        showCitationIfNeed(countOfRecords)
+        if (!isUpdate) {
+            val countOfRecords = getCurrentCountOfRecords() + 1
+            RecordCountPreferences.saveRecordCount(activity, countOfRecords)
+            showCitationIfNeed(countOfRecords)
+        }
     }
 
     fun getCurrentCountOfRecords(): Int {

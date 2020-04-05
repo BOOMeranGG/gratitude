@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.database.entities.Record
@@ -81,12 +82,36 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
         }.execute()
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == SOLO_RECORD_RESULT_CODE) {
+            val jsonRecord = data?.getStringExtra(RESULT_JSON_RECORD)
+            if (!jsonRecord.isNullOrEmpty()) {
+                val record = Gson().fromJson(jsonRecord, Record::class.java)
+                val oldRecord = records.first { oldRecord ->
+                    oldRecord.id == record.id
+                }
+
+                records.remove(oldRecord)
+                records.add(record)
+                records.sortBy {
+                    it.id
+                }
+                getAllNoticing()
+            }
+        }
+
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
     // -----------------------------------------------------------------------------------------------------------------
 
     private inner class RecordHolder(val recordView: View) :
         RecyclerView.ViewHolder(recordView), View.OnClickListener {
 
+        lateinit var currentRecord: Record
+
         fun bindRecord(record: Record, position: Int, countOfRecords: Int) {
+            currentRecord = record
             setUpTexts(record)
             setUpHeaderAndFooter(position, countOfRecords)
             setUpImages(record)
@@ -94,6 +119,7 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
             setViewGoneToNonExistentPart(record)
 
             recordView.listRecordLayout.setOnClickListener(this)
+            //recordView.layoutContent.setOnClickListener {  }
         }
 
         private fun setViewGoneToNonExistentPart(record: Record) {
@@ -122,12 +148,16 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
                 recordView.imgSound.setOnClickListener {
                     audioController.startPlay(record.soundName!!)
                 }
+            } else {
+                recordView.imgSound.visibility = View.GONE
             }
             if (!record.soundNameSecond.isNullOrBlank() && audioController.isAudioExist(record.soundNameSecond!!)) {
                 recordView.imgSoundSecond.setImageResource(R.drawable.ic_sound)
                 recordView.imgSoundSecond.setOnClickListener {
                     audioController.startPlay(record.soundNameSecond!!)
                 }
+            } else {
+                recordView.imgSoundSecond.visibility = View.GONE
             }
         }
 
@@ -137,6 +167,8 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
                 recordView.imgRecord.setOnClickListener {
                     //showImage(record.imageName!!)
                 }
+            } else {
+                recordView.imgRecord.visibility = View.GONE
             }
             if (!record.imageNameSecond.isNullOrBlank()) {
                 ImageLoader(record.imageNameSecond!! + IMAGE_MINI, this@JournalActivity)
@@ -144,6 +176,8 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
                 recordView.imgRecordSecond.setOnClickListener {
                     //showImage(record.imageNameSecond!!)
                 }
+            } else {
+                recordView.imgRecordSecond.visibility = View.GONE
             }
         }
 
@@ -165,6 +199,10 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
         }
 
         override fun onClick(v: View) {
+            val intent = Intent(this@JournalActivity, SoloRecordActivity::class.java)
+            val recordJson = Gson().toJson(currentRecord)
+            intent.putExtra(RECORD_JSON_VALUE_KEY, recordJson)
+            startActivityForResult(intent, SOLO_RECORD_RESULT_CODE)
         }
     }
 

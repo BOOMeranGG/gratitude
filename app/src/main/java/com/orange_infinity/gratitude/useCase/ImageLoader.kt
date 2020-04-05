@@ -11,7 +11,9 @@ const val IMAGE_MINI = "_mini"
 
 class ImageLoader(
     private val fileName: String,
-    private val loaderOwner: ImageLoaderOwner
+    private val loaderOwner: ImageLoaderOwner,
+    private val maxWidth: Int = 90,
+    private val maxHeight: Int = 90
 ) : AsyncTask<ImageView?, Unit, ImageView?>() {
 
     private var bitmap: Bitmap? = null
@@ -28,7 +30,10 @@ class ImageLoader(
         if (bitmap != null) {
             val width = bitmap!!.width
             val height = bitmap!!.height
-            val divider = (width / 90).coerceAtMost(height / 90)
+            var divider = (width / maxWidth).coerceAtMost(height / maxHeight)
+            if (divider == 0) {
+                divider = 1
+            }
 
             val scaledBitmap = Bitmap.createScaledBitmap(bitmap, width / divider, height / divider, false)
             RecordImagesCache.imageCache.put(fileName, scaledBitmap)

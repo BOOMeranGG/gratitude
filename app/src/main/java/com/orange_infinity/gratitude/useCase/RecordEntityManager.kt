@@ -5,9 +5,9 @@ import com.orange_infinity.gratitude.model.database.entities.Record
 
 class RecordEntityManager {
 
-    fun save(activity: Activity, record: Record) {
+    fun save(activity: Activity, record: Record, isUpdate: Boolean = false) {
         Thread {
-            RecordEntityService(activity).saveRecord(record)
+            RecordEntityService(activity).saveRecord(record, isUpdate)
         }.start()
     }
 }

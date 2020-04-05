@@ -5,7 +5,9 @@ import android.media.MediaRecorder
 import android.os.Environment
 import java.io.File
 
-class AudioController {
+class AudioController(
+    private val listener: AudioCompleteListener? = null
+) {
 
     private var mediaRecorder: MediaRecorder = MediaRecorder()
     private var mediaPlayer: MediaPlayer = MediaPlayer()
@@ -38,6 +40,10 @@ class AudioController {
         mediaPlayer.setDataSource(getMediaPath() + fileName)
         mediaPlayer.prepare()
         mediaPlayer.start()
+
+        mediaPlayer.setOnCompletionListener {
+            listener?.onAudioComplete()
+        }
     }
 
     fun stopPlay() {

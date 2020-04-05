@@ -23,8 +23,8 @@ class ImageViewerActivity : BaseActivity(), ImageLoaderOwner {
         setContentView(R.layout.activity_image_viewer)
         Slidr.attach(this)
 
-        imageName = intent?.extras?.getString(IMAGE_NAME_KEY) ?: ""
-        ImageLoader(imageName + IMAGE_MINI, this).execute(imgMain)
+        imageName = intent?.extras?.getString(IMAGE_NAME_KEY + IMAGE_MINI) ?: ""
+        ImageLoader(imageName, this).execute(imgMain)
 
         imgMain.setOnClickListener {
             finish()
@@ -38,9 +38,9 @@ class ImageViewerActivity : BaseActivity(), ImageLoaderOwner {
             display.getSize(size)
             val width = size.x
             val height = size.y
-            val imageLoader = ImageLoader(imageName, this)
+            //val imageLoader = ImageLoader(imageName, this)
             val layoutMain = findViewById<ConstraintLayout>(R.id.layoutMain)
-            imageLoader.execute(imgMain)
+            ImageLoader(imageName, this, 1200, 1200).execute(imgMain)
 
             isLoadFullImage = true
         }
