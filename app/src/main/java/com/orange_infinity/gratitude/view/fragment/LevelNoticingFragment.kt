@@ -39,7 +39,7 @@ class LevelNoticingFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val v = inflater.inflate(R.layout.level_noticing_fragment, container, false)
 
-        v.tvNumberOf.text = "${countOfRecords % 3 + 1} of 3"
+        v.tvNumberOf.text = "${countOfRecords % 3 + 1}/3"
         val level = countOfRecords / 3 + 1
         var name = "Noticing"
         if (level == 2) {

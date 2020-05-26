@@ -15,8 +15,6 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import android.util.DisplayMetrics
 
-
-
 const val TAG = "MAIN_TAG"
 const val MAIN_FOLDER = "gratitude"
 
@@ -24,12 +22,12 @@ fun showFcmToken(context: Context) {
     FirebaseInstanceId.getInstance().instanceId
         .addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
-                Log.i(TAG, "getInstanceId failed", task.exception)
+                Log.d(TAG, "getInstanceId failed", task.exception)
                 return@OnCompleteListener
             }
 
             val token = task.result?.token
-            Log.i(TAG, token)
+            Log.d(TAG, token)
             Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
         })
 }

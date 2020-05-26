@@ -46,6 +46,18 @@ class AudioController(
         }
     }
 
+    fun getDuration(fileName: String): Int {
+        return try {
+            releasePlayer()
+            mediaPlayer = MediaPlayer()
+            mediaPlayer.setDataSource(getMediaPath() + fileName)
+
+            mediaPlayer.duration / 1_000_000
+        } catch (ex: Exception) {
+            0
+        }
+    }
+
     fun stopPlay() {
         mediaPlayer.stop()
     }

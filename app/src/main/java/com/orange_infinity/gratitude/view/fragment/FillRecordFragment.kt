@@ -247,7 +247,7 @@ class FillRecordFragment : Fragment() {
             v.tvTitle.text = "What could you be grateful for today?"
             v.tvDescription.text = "Good weather? Cup of coffee? A loved one?"
             //v.imgMicrophone.setImageResource(R.drawable.microphone)
-            v.imgPaint.setImageResource(R.drawable.paint)
+            //v.imgPaint.setImageResource(R.drawable.paint)
         }
     }
 
@@ -260,7 +260,7 @@ class FillRecordFragment : Fragment() {
             v.tvTitle.text = "What could you be grateful for today?"
             v.tvDescription.text = "Good weather? Cup of coffee? A loved one?"
             //v.imgMicrophone.setImageResource(R.drawable.microphone)
-            v.imgPaint.setImageResource(R.drawable.paint)
+            //v.imgPaint.setImageResource(R.drawable.paint)
         }
     }
 
@@ -272,7 +272,7 @@ class FillRecordFragment : Fragment() {
             v.tvTitle.text = "WHAT ARE YOU GRATEFUL FOR IN YOUR LIFE?"
             v.tvDescription.text = ""
             //v.imgMicrophone.setImageResource(R.drawable.microphone)
-            v.imgPaint.setImageResource(R.drawable.paint)
+            //v.imgPaint.setImageResource(R.drawable.paint)
         }
     }
 }

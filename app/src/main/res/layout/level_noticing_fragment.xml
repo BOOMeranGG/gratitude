@@ -3,9 +3,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/background"
+    android:background="@drawable/background_2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:scrollbars="none"
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
@@ -14,45 +15,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutTop"
             android:orientation="horizontal"
-            android:layout_marginTop="16dp"
             android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_height="40dp">
 
             <TextView
                 android:id="@+id/tvNumberOf"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorMainText"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_alignParentStart="true"
-                android:text="1 of 3"/>
+                android:text="1/3"/>
 
             <TextView
                 android:id="@+id/tvLevelNoticing"
-                android:layout_width="150dp"
-                android:layout_marginEnd="16dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorLightGray"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:textStyle="bold"
-                android:textColor="@color/colorBlack"
+                android:textColor="@color/colorMainText"
                 android:textSize="16sp"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:layout_alignParentEnd="true"
                 android:text="Level 1: Noticing"/>
 
-        </RelativeLayout>
+            <View
+                android:id="@+id/separator"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/colorSeparator"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/layoutMain"
             android:layout_width="match_parent"
-            android:layout_height="15500dp"
+            android:layout_height="wrap_content"
             android:layout_below="@id/layoutTop"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="8dp"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:orientation="vertical">
@@ -69,7 +80,7 @@
                 android:id="@+id/fillRecordContainerBottom"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 android:layout_weight="44">
             </FrameLayout>
@@ -83,29 +94,20 @@
 
                 <Button
                     android:id="@+id/btnSave"
-                    android:layout_width="200dp"
-                    android:layout_height="50dp"
-                    android:background="@drawable/dark_green_button_selector"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/white_button_selector"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
-                    android:textStyle="normal"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorMainText"
                     android:text="Save"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
-        <View
-            android:id="@+id/layoutSpace"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_below="@id/layoutMain">
-        </View>
-
     </RelativeLayout>
-
 
 </ScrollView>

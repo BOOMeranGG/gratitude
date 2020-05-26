@@ -10,8 +10,7 @@ import com.orange_infinity.gratitude.view.fragment.LevelNoticingFragment
 import com.orange_infinity.gratitude.view.fragment.PracticingGratitudeFragment
 import com.r0adkll.slidr.Slidr
 
-class NoticingActivity : AppCompatActivity() {
-
+class NoticingActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

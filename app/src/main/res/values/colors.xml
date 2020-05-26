@@ -10,10 +10,17 @@
     <color name="colorTransparentWhite">#5AFFFFFF</color>
     <color name="colorGray">#808080</color>
     <color name="colorRed">#FF0000</color>
+    <color name="colorDarkRed">#BA0808</color>
     <color name="colorGreen">#00FF00</color>
     <color name="color_darker_gray">#aaa</color>
     <color name="colorLightGray">#dadada</color>
     <color name="colorTransparentLightGray">#63dadada</color>
     <color name="colorTransparentGray">#63808080</color>
     <color name="colorBlueText">#250854</color>
+
+    <color name="colorMainText">#41383A</color>
+    <color name="colorShareText">#F9F5D9</color>
+    <color name="colorSeparator">#CFBD93</color>
+    <color name="colorMusicLine">#41383A</color>
+    <color name="colorStatusBar">#FCE3D7</color>
 </resources>

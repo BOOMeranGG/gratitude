@@ -14,8 +14,6 @@ import com.orange_infinity.gratitude.R
 import com.orange_infinity.gratitude.model.database.AppDatabase
 import com.orange_infinity.gratitude.model.preferences.EntryDateRegister
 import com.orange_infinity.gratitude.model.preferences.RecordCountPreferences
-import com.orange_infinity.gratitude.view.fragment.LevelNoticingFragment
-import com.orange_infinity.gratitude.view.fragment.PracticingGratitudeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 private const val REQUEST_READ_STORAGE = 113
@@ -35,7 +33,7 @@ class MainActivity : BaseActivity() {
         btnNoticing.setOnClickListener {
             if (RecordCountPreferences.getCountOfRecords(this) == 0) {
                 val intent = Intent(this, CitationActivity::class.java)
-                intent.putExtra(IMAGE_R_ID_KEY, R.drawable.level1)
+                intent.putExtra(IMAGE_R_ID_KEY, R.drawable.citate1_new)
                 intent.putExtra(IS_FIRST_KEY, true)
                 intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(intent)
@@ -58,11 +56,13 @@ class MainActivity : BaseActivity() {
             startActivity(intent)
         }
 
-        imgShare.setOnClickListener {
+        layoutShare.setOnClickListener {
             val intent = Intent(this, ShareActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
+
+        //showFcmToken(this)
     }
 
     override fun onResume() {
@@ -103,19 +103,24 @@ class MainActivity : BaseActivity() {
     private fun setEnabling() {
         setEnableToAll(true)
         val countOfRecords = RecordCountPreferences.getCountOfRecords(this) ?: 0
-        if (countOfRecords == 0) {
-            btnReflecting.isEnabled = false
-            btnPractice.isEnabled = false
-            btnJournal.isEnabled = false
-        } else if (countOfRecords < 3) {
-            btnReflecting.isEnabled = false
-            btnPractice.isEnabled = false
-        } else if (countOfRecords < 6) {
-            btnNoticing.isEnabled = false
-            btnPractice.isEnabled = false
-        } else {
-            btnNoticing.isEnabled = false
-            btnReflecting.isEnabled = false
+        when {
+            countOfRecords == 0 -> {
+                btnReflecting.isEnabled = false
+                btnPractice.isEnabled = false
+                btnJournal.isEnabled = false
+            }
+            countOfRecords < 3 -> {
+                btnReflecting.isEnabled = false
+                btnPractice.isEnabled = false
+            }
+            countOfRecords < 6 -> {
+                btnNoticing.isEnabled = false
+                btnPractice.isEnabled = false
+            }
+            else -> {
+                btnNoticing.isEnabled = false
+                btnReflecting.isEnabled = false
+            }
         }
     }
 

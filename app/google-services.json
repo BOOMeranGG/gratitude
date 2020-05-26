@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "282301380745-03no8avur209fun1hvrmd4h5enqmut75.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orange_infinity.gratitude",
+            "certificate_hash": "aaf0bb6443fdb376054c403305fd4be647d09a49"
+          }
+        },
+        {
           "client_id": "282301380745-ae5oq1k62avk26vpfr0mu9p1ke0mi468.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

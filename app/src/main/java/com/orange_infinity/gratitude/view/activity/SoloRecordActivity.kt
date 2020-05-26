@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.room.util.StringUtil
 import com.google.gson.Gson
 import com.google.zxing.common.StringUtils
@@ -23,10 +24,12 @@ const val RECORD_JSON_VALUE_KEY = "recordJsonValueKey"
 const val RESULT_JSON_RECORD = "resultJsonRecord"
 const val SOLO_RECORD_RESULT_CODE = 0
 
-class SoloRecordActivity : AppCompatActivity(), ImageLoaderOwner, AudioCompleteListener {
+class SoloRecordActivity : BaseActivity(), ImageLoaderOwner, AudioCompleteListener {
 
     private lateinit var record: Record
     private val audioController = AudioController(this)
+    private var firstSoundRunning = false
+    private var secondSoundRunning = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,17 +51,22 @@ class SoloRecordActivity : AppCompatActivity(), ImageLoaderOwner, AudioCompleteL
             record.descriptionSecond = editDescriptionSecond.text.toString()
 
             RecordEntityManager().save(this, record, true)
-            var recordJson = Gson().toJson(record)
+            val recordJson2 = Gson().toJson(record)
             val intent = Intent()
-            intent.putExtra(RESULT_JSON_RECORD, recordJson)
+            intent.putExtra(RESULT_JSON_RECORD, recordJson2)
             setResult(SOLO_RECORD_RESULT_CODE, intent)
             finish()
         }
     }
 
     override fun onAudioComplete() {
-        imgSoundPlay.setImageResource(R.drawable.ic_play_start)
-        imgSoundPlaySecond.setImageResource(R.drawable.ic_play_start)
+        imgSoundPlay.setImageResource(R.drawable.ic_play)
+        imgSoundPlaySecond.setImageResource(R.drawable.ic_play)
+        lineFirst.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMusicLine))
+        lineSecond.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMusicLine))
+
+        firstSoundRunning = false
+        secondSoundRunning = false
     }
 
     private fun initViews() {
@@ -85,14 +93,19 @@ class SoloRecordActivity : AppCompatActivity(), ImageLoaderOwner, AudioCompleteL
             layoutSoundFirst.visibility = View.VISIBLE
 
             imgSoundPlay.setOnClickListener {
-                audioController.startPlay(record.soundName!!)
-                imgSoundPlay.setImageResource(R.drawable.ic_play_active3)
-                Log.d(com.orange_infinity.gratitude.TAG, "First music start playing")
-            }
-            imgSoundEnd.setOnClickListener {
-                audioController.stopPlay()
-                imgSoundPlay.setImageResource(R.drawable.ic_play_start)
-                Log.d(com.orange_infinity.gratitude.TAG, "First music stop playing")
+                if (!firstSoundRunning) {
+                    audioController.startPlay(record.soundName!!)
+                    imgSoundPlay.setImageResource(R.drawable.ic_stop)
+                    firstSoundRunning = true
+                    lineFirst.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDarkRed))
+                    Log.d(com.orange_infinity.gratitude.TAG, "First music start playing")
+                } else {
+                    audioController.stopPlay()
+                    imgSoundPlay.setImageResource(R.drawable.ic_play)
+                    firstSoundRunning = false
+                    lineFirst.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMusicLine))
+                    Log.d(com.orange_infinity.gratitude.TAG, "First music stop playing")
+                }
             }
         } else {
             layoutSoundFirst.visibility = View.GONE
@@ -101,14 +114,19 @@ class SoloRecordActivity : AppCompatActivity(), ImageLoaderOwner, AudioCompleteL
             layoutSoundSecond.visibility = View.VISIBLE
 
             imgSoundPlaySecond.setOnClickListener {
-                audioController.startPlay(record.soundNameSecond!!)
-                imgSoundPlaySecond.setImageResource(R.drawable.ic_play_active3)
-                Log.d(com.orange_infinity.gratitude.TAG, "Second music start playing")
-            }
-            imgSoundEndSecond.setOnClickListener {
-                audioController.stopPlay()
-                imgSoundPlaySecond.setImageResource(R.drawable.ic_play_start)
-                Log.d(com.orange_infinity.gratitude.TAG, "Second music stop playing")
+                if (!secondSoundRunning) {
+                    audioController.startPlay(record.soundNameSecond!!)
+                    imgSoundPlaySecond.setImageResource(R.drawable.ic_stop)
+                    secondSoundRunning = true
+                    lineSecond.setBackgroundColor(ContextCompat.getColor(this, R.color.colorDarkRed))
+                    Log.d(com.orange_infinity.gratitude.TAG, "Second music start playing")
+                } else {
+                    audioController.stopPlay()
+                    imgSoundPlaySecond.setImageResource(R.drawable.ic_play)
+                    secondSoundRunning = false
+                    lineSecond.setBackgroundColor(ContextCompat.getColor(this, R.color.colorMusicLine))
+                    Log.d(com.orange_infinity.gratitude.TAG, "Second music stop playing")
+                }
             }
         } else {
             layoutSoundSecond.visibility = View.GONE

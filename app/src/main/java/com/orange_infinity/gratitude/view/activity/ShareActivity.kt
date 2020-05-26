@@ -19,7 +19,7 @@ class ShareActivity : BaseActivity() {
         btnShare.shareContent = FacebookContent.CONTENT
     }
 
-    fun printHashKey() {
+    private fun printHashKey() {
         try {
             val info = packageManager.getPackageInfo(
                 "com.orange_infinity.gratitude",

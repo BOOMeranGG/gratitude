@@ -119,16 +119,17 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
             setViewGoneToNonExistentPart(record)
 
             recordView.listRecordLayout.setOnClickListener(this)
-            //recordView.layoutContent.setOnClickListener {  }
         }
 
         private fun setViewGoneToNonExistentPart(record: Record) {
             if (record.description.isEmpty()) {
                 recordView.imgRecord.visibility = View.GONE
-                recordView.imgSound.visibility = View.GONE
+                //recordView.imgSound.visibility = View.GONE
+                recordView.imgLayout.visibility = View.GONE
             } else if (record.descriptionSecond.isEmpty()) {
                 recordView.imgRecordSecond.visibility = View.GONE
-                recordView.imgSoundSecond.visibility = View.GONE
+                //recordView.imgSoundSecond.visibility = View.GONE
+                recordView.imgLayoutSecond.visibility = View.GONE
             }
         }
 
@@ -136,28 +137,24 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
             recordView.tvDate.text = record.date
             recordView.tvDescription.text = record.description
             recordView.tvDescriptionSecond.text = record.descriptionSecond
-
-            if (record.description.isEmpty() || record.descriptionSecond.isEmpty()) {
-                recordView.separatorDescription.visibility = View.GONE
-            }
         }
 
         private fun setUpSounds(record: Record) {
             if (!record.soundName.isNullOrBlank() && audioController.isAudioExist(record.soundName!!)) {
-                recordView.imgSound.setImageResource(R.drawable.ic_sound)
+                recordView.imgSound.setImageResource(R.drawable.ic_play)
                 recordView.imgSound.setOnClickListener {
                     audioController.startPlay(record.soundName!!)
                 }
             } else {
-                recordView.imgSound.visibility = View.GONE
+                recordView.imgLayout.visibility = View.GONE
             }
             if (!record.soundNameSecond.isNullOrBlank() && audioController.isAudioExist(record.soundNameSecond!!)) {
-                recordView.imgSoundSecond.setImageResource(R.drawable.ic_sound)
+                recordView.imgSoundSecond.setImageResource(R.drawable.ic_play)
                 recordView.imgSoundSecond.setOnClickListener {
                     audioController.startPlay(record.soundNameSecond!!)
                 }
             } else {
-                recordView.imgSoundSecond.visibility = View.GONE
+                recordView.imgLayoutSecond.visibility = View.GONE
             }
         }
 
@@ -165,7 +162,6 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
             if (!record.imageName.isNullOrBlank()) {
                 ImageLoader(record.imageName!! + IMAGE_MINI, this@JournalActivity).execute(recordView.imgRecord)
                 recordView.imgRecord.setOnClickListener {
-                    //showImage(record.imageName!!)
                 }
             } else {
                 recordView.imgRecord.visibility = View.GONE
@@ -174,10 +170,13 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
                 ImageLoader(record.imageNameSecond!! + IMAGE_MINI, this@JournalActivity)
                     .execute(recordView.imgRecordSecond)
                 recordView.imgRecordSecond.setOnClickListener {
-                    //showImage(record.imageNameSecond!!)
                 }
             } else {
                 recordView.imgRecordSecond.visibility = View.GONE
+            }
+
+            if (record.imageName.isNullOrBlank() && record.imageNameSecond.isNullOrBlank()) {
+                recordView.layoutImages.visibility = View.GONE
             }
         }
 
@@ -185,17 +184,24 @@ class JournalActivity : BaseActivity(), ImageLoaderOwner {
             if (position == 0) {
                 recordView.layoutTitle.visibility = View.VISIBLE
             }
-            if (position == countOfRecords - 1) {
-                recordView.line1.visibility = View.GONE
-                recordView.line2.visibility = View.GONE
-            }
         }
 
-        private fun showImage(imageName: String) {
-//            val intent = Intent(this@JournalActivity, ImageViewerActivity::class.java)
-//            intent.putExtra(IMAGE_NAME_KEY, imageName)
-//            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-//            startActivity(intent)
+        private fun getDurationFormat(duration: Int): String {
+            val minutes = duration / 60
+            val seconds = duration % 60
+
+            val minutesStr = if (minutes >= 10) {
+                minutes
+            } else {
+                "0$minutes"
+            }
+            val secondsStr = if (seconds >= 10) {
+                seconds
+            } else {
+                "0$seconds"
+            }
+
+            return "$minutesStr:$secondsStr"
         }
 
         override fun onClick(v: View) {

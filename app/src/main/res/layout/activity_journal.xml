@@ -5,15 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/background_2"
     tools:context=".view.activity.JournalActivity">
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorTransparentLightGray">
-
-    </View>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerRecords"
